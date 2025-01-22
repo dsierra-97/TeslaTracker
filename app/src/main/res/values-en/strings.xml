@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nombreApp">TeslaTracker</string>
+    <string name="mensajeEjemplo">TeslaTracker Main View</string>
+
+</resources>
