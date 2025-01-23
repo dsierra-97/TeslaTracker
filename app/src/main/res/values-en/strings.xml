@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nombreApp">TeslaTracker</string>
-    <string name="mensajeEjemplo">TeslaTracker Main View</string>
-
+    <string name="app_name">TeslaTracker</string>
+    <string name="example_message">TeslaTracker Main View</string>
+    <!-- Strings para preferencias de idiomas -->
+    <string name="language">Language</string>
+    <string name="language_summary">Select a language</string>
+    <!-- Idiomas disponibles -->
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Español</item>
+    </string-array>
+    <!-- Códigos de Idiomas -->
+    <string-array name="language_values">
+        <item>en</item>
+        <item>es</item>
+    </string-array>
+    <!-- Menú -->
+    <string name="list">List</string>
+    <string name="achievements">Achievements</string>
+    <string name="settings">Settings</string>
 </resources>

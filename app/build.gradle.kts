@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.sierrapor.teslatracker"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.sierrapor.teslatracker"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -32,12 +32,19 @@ android {
 }
 
 dependencies {
-
+    // Dependencias comunes de Android
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+    implementation(libs.preference)
+    implementation(libs.activity)
+    //testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    //Room
+    implementation(libs.room.runtime) // Biblioteca principal de Room
+    annotationProcessor(libs.room.compiler) // Procesador de anotaciones para Java
 }
