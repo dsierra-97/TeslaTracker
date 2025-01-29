@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
@@ -23,7 +20,6 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Locale;
-import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavView = findViewById(R.id.bottom_nav_view);
 
         //Se obtiene el NavController manualmente ya que daba error al usar R.id.nav_host_fragment no se encontraba el navHostFragment
-        FragmentContainerView navHostFragment = findViewById(R.id.nav_host_fragment);
         NavController navController = NavHostFragment.findNavController((NavHostFragment) (getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment)));
         NavigationUI.setupWithNavController(bottomNavView, navController);
 
