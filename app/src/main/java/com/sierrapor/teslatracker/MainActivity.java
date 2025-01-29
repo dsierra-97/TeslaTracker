@@ -1,5 +1,9 @@
 package com.sierrapor.teslatracker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -14,9 +18,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Locale;
 import java.util.Objects;
 
 
@@ -49,5 +55,22 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(newBase);
+        String lang = prefs.getString("language", "es");
+        Context context = updateLocale(newBase, lang);
+        super.attachBaseContext(context);
+    }
+
+    private Context updateLocale(Context context, String langCode) {
+        Locale locale = new Locale(langCode);
+        Locale.setDefault(locale);
+        Resources res = context.getResources();
+        Configuration config = new Configuration(res.getConfiguration());
+        config.setLocale(locale);
+        return context.createConfigurationContext(config);
     }
 }

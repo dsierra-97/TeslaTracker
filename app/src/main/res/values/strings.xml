@@ -2,23 +2,24 @@
 <resources>
     <string name="app_name">TeslaTracker</string>
     <string name="example_message">TeslaTracker Vista Principal</string>
-    <!-- Strings para preferencias de idiomas -->
-    <string name="language">Idioma</string>
-    <string name="language_summary">Selecciona un idioma</string>
-    <!-- Idiomas disponibles -->
-    <string-array name="language_entries">
-        <item>English</item>
-        <item>Español</item>
-    </string-array>
-    <!-- Códigos de Idiomas -->
-    <string-array name="language_values">
-        <item>en</item>
-        <item>es</item>
-    </string-array>
+
+    <!-- Etiquetas traducibles -->
+    <string name="pref_language">Idioma</string>
+    <string name="pref_language_summary">Selecciona el idioma</string>
+    <string name="pref_language_dialog">Elige un idioma</string>
+
+    <!-- Opciones del idioma -->
+    <string name="language_spanish">Español</string>
+    <string name="language_english">Inglés</string>
+
+    <!-- Valores para ListPreference -->
+    <string name="language_value_es" translatable="false">es</string>
+    <string name="language_value_en" translatable="false">en</string>
+
     <!-- Menú -->
     <string name="list">Lista</string>
     <string name="achievements">Logros</string>
     <string name="settings">Ajustes</string>
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
