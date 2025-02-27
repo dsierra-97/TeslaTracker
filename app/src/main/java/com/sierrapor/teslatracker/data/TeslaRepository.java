@@ -17,18 +17,13 @@ public class TeslaRepository {
     public void update(Tesla tesla) {
         teslaDao.update(tesla);
     }
-
     public void delete(Tesla tesla) {
         teslaDao.delete(tesla);
     }
     public LiveData<List<Tesla>> getAllTeslas() {
         return teslaDao.getAllTeslas();
     }
-
     public LiveData<Tesla> getTesla(int id) {
         return teslaDao.getTesla(id);
     }
-
-
-
 }

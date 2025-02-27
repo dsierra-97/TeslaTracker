@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">TeslaTracker</string>
     <string name="example_message">TeslaTracker Main View</string>
-    <!-- Menú -->
     <string name="list">List</string>
     <string name="achievements">Achievements</string>
     <string name="settings">Settings</string>
@@ -12,4 +11,10 @@
     <string name="pref_language_dialog">Choose a language</string>
     <string name="language_spanish">Spanish</string>
     <string name="language_english">English</string>
+    <string name="add_button">Add Tesla</string>
+    <string name="save_without_complete">Complete all mandatory fields</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="plate_hint">Plate</string>
+    <string name="color_hint">Color</string>
 </resources>

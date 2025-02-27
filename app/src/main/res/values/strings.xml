@@ -21,5 +21,13 @@
     <string name="achievements">Logros</string>
     <string name="settings">Ajustes</string>
     <string name="hello_blank_fragment">Hola fragmento en blanco</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- Form -->
+    <string name="add_button">Añadir Tesla</string>
+    <string name="save_without_complete">Completa todos los campos obligatorios</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="plate_hint">Matrícula</string>
+    <string name="color_hint">Color</string>
+
 </resources>

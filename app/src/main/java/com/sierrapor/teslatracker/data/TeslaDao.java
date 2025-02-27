@@ -15,16 +15,12 @@ public interface TeslaDao {
 
     @Insert
     void insert(Tesla tesla);
-
     @Update
     void update(Tesla tesla);
-
     @Delete
     void delete(Tesla tesla);
-
     @Query("SELECT * FROM Teslas WHERE id = :id")
     LiveData<Tesla> getTesla(int id);
-
     @Query("SELECT * FROM Teslas ORDER BY plate ASC")
     LiveData<List<Tesla>> getAllTeslas();
 }

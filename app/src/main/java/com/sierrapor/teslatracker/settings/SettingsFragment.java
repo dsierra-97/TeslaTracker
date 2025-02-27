@@ -18,10 +18,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         if (languagePreference != null) {
             languagePreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 LocaleHelper.setLocale(requireContext(), newValue.toString());
-                // Reiniciar la actividad correctamente
+/*              TODO: Decidir que hacer con esta puta mierda
+                Estas lineas comentadas solucionan el bug de no actualizar la configuración
+º               al cambiar el idioma, pero por otra parte reinician la actividad al completo y
+                te llevan al fragmento de inicio, que de momento es logros pero que será form
+
                 Intent intent = requireActivity().getIntent();
-                requireActivity().finish();
-                requireActivity().startActivity(intent);
+                 requireActivity().finish();
+                requireActivity().startActivity(intent);*/
+
+                requireActivity().recreate();
+
                 return true;
             });
         }

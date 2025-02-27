@@ -1,66 +1,75 @@
 package com.sierrapor.teslatracker.form;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.sierrapor.teslatracker.R;
+import com.sierrapor.teslatracker.data.Tesla;
+import com.sierrapor.teslatracker.data.TeslaViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FormFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FormFragment extends Fragment {
+public class FormFragment extends DialogFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private EditText editTextPlate;
+    private EditText editTextColor;
+    private TeslaViewModel teslaViewModel;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Inflar el layout del diálogo
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.fragment_form, null);
 
-    public FormFragment() {
-        // Required empty public constructor
-    }
+        // Referenciar los campos de entrada
+        editTextPlate = view.findViewById(R.id.edit_text_plate);
+        editTextColor = view.findViewById(R.id.edit_text_color);
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FormFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FormFragment newInstance(String param1, String param2) {
-        FormFragment fragment = new FormFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        // Construir el diálogo con AlertDialog.Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setView(view)
+                .setTitle(getString(R.string.add_button)) // Aquí se usa getString()
+                .setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+                    // Simplemente se cierra el diálogo
+                    dialog.cancel();
+                })
+                .setPositiveButton(getString(R.string.save), (dialog, which) -> {
+                    // Recoger los datos introducidos
+                    String plate = editTextPlate.getText().toString().trim();
+                    String color = editTextColor.getText().toString().trim();
+                    // Validación básica: asegurarse de que los campos no estén vacíos
+                    if (plate.isEmpty() || color.isEmpty()) {
+                        Toast.makeText(getActivity(), getString(R.string.save_without_complete), Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Crear un nuevo objeto Tesla y asignar los valores
+                        Tesla newTesla = new Tesla();
+                        newTesla.setPlate(plate);
+                        newTesla.setColor(color);
+
+                        // Insertar en la base de datos a través del ViewModel
+                        teslaViewModel.insert(newTesla);
+                    }
+                });
+
+
+        return builder.create();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_form, container, false);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        // Obtener el TeslaViewModel del Activity que hospeda el diálogo.
+        // Esto asegura que se comparta el mismo ViewModel con el resto de la aplicación (por ejemplo, para actualizar la lista).
+        teslaViewModel = new ViewModelProvider(requireActivity()).get(TeslaViewModel.class);
     }
 }

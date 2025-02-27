@@ -12,12 +12,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.sierrapor.teslatracker.data.TeslaViewModel;
+import com.sierrapor.teslatracker.form.FormFragment;
 
 import java.util.Locale;
 
@@ -29,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
+        TeslaViewModel teslaViewModel = new ViewModelProvider(this).get(TeslaViewModel.class);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         BottomNavigationView bottomNavView = findViewById(R.id.bottom_nav_view);
@@ -49,6 +54,19 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        // Encuentra el FloatingActionButton
+        FloatingActionButton fabAddTesla = findViewById(R.id.fab_add_tesla);
+
+        // Configura el listener para el botón flotante
+        fabAddTesla.setOnClickListener(view -> {
+            // Crea una instancia del DialogFragment
+            FormFragment dialogFragment = new FormFragment();
+
+            // Muestra el DialogFragment usando el FragmentManager
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            dialogFragment.show(fragmentManager, "AddTeslaDialog");
         });
     }
 

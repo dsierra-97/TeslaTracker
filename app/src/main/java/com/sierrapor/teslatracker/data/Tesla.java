@@ -20,6 +20,9 @@ public class Tesla {
     private boolean foreign;
     @ColumnInfo(name = "country")
     private String country;
+    @ColumnInfo(name = "number_times_seen")
+    private int numberTimesSeen;
+
 
     public int getId() {
         return id;
@@ -61,17 +64,21 @@ public class Tesla {
         this.country = country;
     }
 
+    public int getNumberTimesSeen() {return numberTimesSeen;}
+
+    public void setNumberTimesSeen(int numberTimesSeen) {this.numberTimesSeen = numberTimesSeen;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tesla tesla = (Tesla) o;
-        return id == tesla.id && foreign == tesla.foreign && Objects.equals(plate, tesla.plate) && Objects.equals(color, tesla.color) && Objects.equals(country, tesla.country);
+        return id == tesla.id && foreign == tesla.foreign && numberTimesSeen == tesla.numberTimesSeen && Objects.equals(plate, tesla.plate) && Objects.equals(color, tesla.color) && Objects.equals(country, tesla.country);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, plate, color, foreign, country);
+        return Objects.hash(id, plate, color, foreign, country, numberTimesSeen);
     }
 
     @NonNull
@@ -83,6 +90,7 @@ public class Tesla {
                 ", color='" + color + '\'' +
                 ", foreign=" + foreign +
                 ", country='" + country + '\'' +
+                ", numberTimesSeen=" + numberTimesSeen +
                 '}';
     }
 }
