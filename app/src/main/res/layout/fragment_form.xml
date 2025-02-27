@@ -23,4 +23,24 @@
         android:hint="@string/color_hint"
         android:inputType="text" />
 
+    <CheckBox
+        android:id="@+id/checkbox_foreign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/is_foreign"/>
+
+    <LinearLayout
+        android:id="@+id/layout_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/edit_text_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/country_hint"/>
+    </LinearLayout>
+
 </LinearLayout>

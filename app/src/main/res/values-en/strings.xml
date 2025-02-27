@@ -17,4 +17,6 @@
     <string name="cancel">Cancel</string>
     <string name="plate_hint">Plate</string>
     <string name="color_hint">Color</string>
+    <string name="country_hint">Country</string>
+    <string name="is_foreign">Is foreign?</string>
 </resources>

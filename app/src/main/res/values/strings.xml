@@ -29,5 +29,6 @@
     <string name="cancel">Cancelar</string>
     <string name="plate_hint">Matrícula</string>
     <string name="color_hint">Color</string>
-
+    <string name="country_hint">País</string>
+    <string name="is_foreign">¿Es extrangero?</string>
 </resources>
