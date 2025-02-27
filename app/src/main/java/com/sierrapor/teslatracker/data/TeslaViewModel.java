@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class TeslaViewModel extends AndroidViewModel {
@@ -20,20 +21,29 @@ public class TeslaViewModel extends AndroidViewModel {
         repository = new TeslaRepository(teslaDao);
         allTeslas = repository.getAllTeslas();
     }
-
     public LiveData<List<Tesla>> getAllTeslas() {
         return allTeslas;
     }
-
-    public void insert(Tesla tesla) {
-        new Thread(() -> repository.insert(tesla)).start();
+    public void check(Tesla tesla) {
+        repository.executorService.execute(() -> {
+            String plate = tesla.getPlate();
+            Tesla existingTesla = repository.getTeslaByPlate(plate);
+            if (existingTesla != null) {
+                existingTesla.setNumberTimesSeen(existingTesla.getNumberTimesSeen() + 1);
+                update(existingTesla);
+            } else {
+                tesla.setFirstTimeSeen(LocalDate.now());
+                insert(tesla);
+            }
+        });
     }
-
-    public void update(Tesla tesla) {
-        new Thread(() -> repository.update(tesla)).start();
-    }
-
     public void delete(Tesla tesla) {
-        new Thread(() -> repository.delete(tesla)).start();
+        repository.delete(tesla);
+    }
+    private void insert(Tesla tesla) {
+        repository.insert(tesla);
+    }
+    private void update(Tesla tesla) {
+        repository.update(tesla);
     }
 }

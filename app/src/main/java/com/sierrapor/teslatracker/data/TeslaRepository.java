@@ -3,25 +3,31 @@ package com.sierrapor.teslatracker.data;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TeslaRepository {
-
     private final TeslaDao teslaDao;
+    final ExecutorService executorService;
+
     public TeslaRepository(TeslaDao teslaDao) {
         this.teslaDao = teslaDao;
+        this.executorService = Executors.newSingleThreadExecutor();
     }
     public void insert(Tesla tesla) {
-        teslaDao.insert(tesla);
+        executorService.execute(() -> teslaDao.insert(tesla));
     }
-
     public void update(Tesla tesla) {
-        teslaDao.update(tesla);
+        executorService.execute(() -> teslaDao.update(tesla));
     }
     public void delete(Tesla tesla) {
-        teslaDao.delete(tesla);
+        executorService.execute(() -> teslaDao.delete(tesla));
     }
     public LiveData<List<Tesla>> getAllTeslas() {
         return teslaDao.getAllTeslas();
+    }
+    public Tesla getTeslaByPlate(String plate) {
+        return teslaDao.getTeslaByPlate(plate);
     }
     public LiveData<Tesla> getTesla(int id) {
         return teslaDao.getTesla(id);

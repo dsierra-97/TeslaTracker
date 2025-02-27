@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity(tableName = "teslas")
@@ -22,7 +23,10 @@ public class Tesla {
     private String country;
     @ColumnInfo(name = "number_times_seen")
     private int numberTimesSeen;
-
+    @ColumnInfo(name = "first_time_seen")
+    private LocalDate firstTimeSeen;
+    @ColumnInfo(name = "last_time_seen")
+    private LocalDate lastTimeSeen;
 
     public int getId() {
         return id;
@@ -67,6 +71,14 @@ public class Tesla {
     public int getNumberTimesSeen() {return numberTimesSeen;}
 
     public void setNumberTimesSeen(int numberTimesSeen) {this.numberTimesSeen = numberTimesSeen;}
+
+    public LocalDate getFirstTimeSeen() {return firstTimeSeen;}
+
+    public void setFirstTimeSeen(LocalDate firstTimeSeen) {this.firstTimeSeen = firstTimeSeen;}
+
+    public LocalDate getLastTimeSeen() {return lastTimeSeen;}
+
+    public void setLastTimeSeen(LocalDate lastTimeSeen) {this.lastTimeSeen = lastTimeSeen;}
 
     @Override
     public boolean equals(Object o) {

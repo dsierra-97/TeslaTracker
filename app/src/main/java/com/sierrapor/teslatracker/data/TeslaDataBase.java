@@ -5,8 +5,10 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 @Database(entities = {Tesla.class}, version = 1, exportSchema = false)
+@TypeConverters(Converters.class) // ← REGISTRAR CONVERTERS
 public abstract class TeslaDataBase extends RoomDatabase {
     private static volatile TeslaDataBase INSTANCE;
     public abstract TeslaDao teslaDao();

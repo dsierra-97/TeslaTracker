@@ -18,6 +18,8 @@ import com.sierrapor.teslatracker.R;
 import com.sierrapor.teslatracker.data.Tesla;
 import com.sierrapor.teslatracker.data.TeslaViewModel;
 
+import java.time.LocalDate;
+
 public class FormFragment extends DialogFragment {
 
     private EditText editTextPlate;
@@ -48,16 +50,17 @@ public class FormFragment extends DialogFragment {
                     String plate = editTextPlate.getText().toString().trim();
                     String color = editTextColor.getText().toString().trim();
                     // Validación básica: asegurarse de que los campos no estén vacíos
-                    if (plate.isEmpty() || color.isEmpty()) {
+                    if (plate.isEmpty()) {
                         Toast.makeText(getActivity(), getString(R.string.save_without_complete), Toast.LENGTH_SHORT).show();
                     } else {
                         // Crear un nuevo objeto Tesla y asignar los valores
                         Tesla newTesla = new Tesla();
                         newTesla.setPlate(plate);
                         newTesla.setColor(color);
+                        newTesla.setLastTimeSeen(LocalDate.now());
 
                         // Insertar en la base de datos a través del ViewModel
-                        teslaViewModel.insert(newTesla);
+                        teslaViewModel.check(newTesla);
                     }
                 });
 
