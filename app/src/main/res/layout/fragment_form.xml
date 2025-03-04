@@ -11,7 +11,7 @@
     <EditText
         android:id="@+id/edit_text_plate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="88dp"
         android:hint="@string/plate_hint"
         android:inputType="text" />
 
@@ -19,15 +19,15 @@
     <EditText
         android:id="@+id/edit_text_color"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="63dp"
         android:hint="@string/color_hint"
         android:inputType="text" />
 
     <CheckBox
         android:id="@+id/checkbox_foreign"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/is_foreign"/>
+        android:layout_width="181dp"
+        android:layout_height="66dp"
+        android:text="@string/is_foreign" />
 
     <LinearLayout
         android:id="@+id/layout_country"
@@ -40,7 +40,7 @@
             android:id="@+id/edit_text_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/country_hint"/>
+            android:hint="@string/country_hint" />
     </LinearLayout>
 
 </LinearLayout>

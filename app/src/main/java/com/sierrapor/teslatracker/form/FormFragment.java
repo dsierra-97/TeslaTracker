@@ -3,11 +3,14 @@ package com.sierrapor.teslatracker.form;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -81,6 +84,8 @@ public class FormFragment extends DialogFragment {
 
                         // Insertar en la base de datos a través del ViewModel
                         teslaViewModel.check(newTesla);
+                        //Mensaje de confirmación al user
+                        showConfirmationDialog();
                     }
                 });
 
@@ -95,4 +100,17 @@ public class FormFragment extends DialogFragment {
         // Esto asegura que se comparta el mismo ViewModel con el resto de la aplicación (por ejemplo, para actualizar la lista).
         teslaViewModel = new ViewModelProvider(requireActivity()).get(TeslaViewModel.class);
     }
+
+    private void showConfirmationDialog() {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.setContentView(R.layout.dialog_confirmation);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // Hace el fondo del diálogo transparente
+        dialog.setCancelable(true);
+
+        ImageView imageView = dialog.findViewById(R.id.image_confirmation);
+        imageView.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
 }
