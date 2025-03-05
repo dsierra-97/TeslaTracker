@@ -48,9 +48,15 @@ public class TeslaViewModel extends AndroidViewModel {
         repository.update(tesla);
     }
     private Tesla updateExistingTesla(Tesla existingTesla, Tesla newTesla) {
-        existingTesla.setCountry(newTesla.getCountry());
+        if (existingTesla.getCountry() == null || existingTesla.getCountry().isEmpty()) {
+            existingTesla.setCountry(newTesla.getCountry());
+        }
+        if(existingTesla.getColor() == null || existingTesla.getColor().isEmpty()){
         existingTesla.setColor(newTesla.getColor());
-        existingTesla.setForeign(newTesla.isForeign());
+        }
+        if (!existingTesla.isForeign()) {
+            existingTesla.setForeign(newTesla.isForeign());
+        }
         existingTesla.setNumberTimesSeen(existingTesla.getNumberTimesSeen()+1);
         existingTesla.setLastTimeSeen(newTesla.getLastTimeSeen());
         existingTesla.setSeenBy(updateSeenBy(existingTesla, newTesla));
