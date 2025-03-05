@@ -29,8 +29,8 @@ public class TeslaViewModel extends AndroidViewModel {
             String plate = tesla.getPlate();
             Tesla existingTesla = repository.getTeslaByPlate(plate);
             if (existingTesla != null) {
-                existingTesla.setNumberTimesSeen(existingTesla.getNumberTimesSeen() + 1);
-                update(existingTesla);
+                Tesla updatedTesla = updateExistingTesla(existingTesla, tesla);
+                update(updatedTesla);
             } else {
                 tesla.setFirstTimeSeen(LocalDate.now());
                 insert(tesla);
@@ -45,5 +45,14 @@ public class TeslaViewModel extends AndroidViewModel {
     }
     private void update(Tesla tesla) {
         repository.update(tesla);
+    }
+    private Tesla updateExistingTesla(Tesla existingTesla, Tesla tesla) {
+        existingTesla.setCountry(tesla.getCountry());
+        existingTesla.setColor(tesla.getColor());
+        existingTesla.setForeign(tesla.isForeign());
+        existingTesla.setNumberTimesSeen(tesla.getNumberTimesSeen()+1);
+        existingTesla.setLastTimeSeen(tesla.getLastTimeSeen());
+        existingTesla.setSeenBy(tesla.getSeenBy());
+        return existingTesla;
     }
 }

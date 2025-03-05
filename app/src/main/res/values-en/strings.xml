@@ -12,11 +12,13 @@
     <string name="language_spanish">Spanish</string>
     <string name="language_english">English</string>
     <string name="add_button">Add Tesla</string>
-    <string name="save_without_complete">Complete all mandatory fields</string>
+    <string name="save_without_complete">Introduce at least a plate</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="plate_hint">Plate</string>
     <string name="color_hint">Color</string>
     <string name="country_hint">Country</string>
-    <string name="is_foreign">Is foreign?</string>
+    <string name="is_foreign">It\'s foreign?</string>
+    <string name="player_hint">Who saw it?</string>
+    <string name="number_times_seen_hint">Number of times seen</string>
 </resources>

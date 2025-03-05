@@ -24,11 +24,16 @@
 
     <!-- Form -->
     <string name="add_button">Añadir Tesla</string>
-    <string name="save_without_complete">Completa todos los campos obligatorios</string>
+    <string name="save_without_complete">Introduce al menos una matrícula</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
     <string name="plate_hint">Matrícula</string>
     <string name="color_hint">Color</string>
     <string name="country_hint">País</string>
     <string name="is_foreign">¿Es extrangero?</string>
+    <string name="player_hint">¿Quién lo ha visto?</string>
+    <!-- List -->
+    <string name="number_times_seen_hint">Número de veces visto</string>
+
 </resources>

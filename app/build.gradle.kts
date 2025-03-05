@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.preference)
     implementation(libs.activity)
+    implementation(libs.recyclerview)
     //testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

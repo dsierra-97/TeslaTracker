@@ -3,30 +3,42 @@ package com.sierrapor.teslatracker.data;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
-@Entity(tableName = "teslas")
+@Entity(tableName = "teslas", indices = {@Index(value = "plate", unique = true)})
 public class Tesla {
+
+    public enum players{
+        ERIKA,
+        MARINA,
+        DIEGO,
+        MANU
+    }
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
     @ColumnInfo(name = "plate")
     private String plate;
     @ColumnInfo(name = "color")
-    private String color;
+    private String color = "feo";
     @ColumnInfo(name = "foreign")
     private boolean foreign;
     @ColumnInfo(name = "country")
     private String country;
+
     @ColumnInfo(name = "number_times_seen")
-    private int numberTimesSeen;
+    private int numberTimesSeen = 1;
     @ColumnInfo(name = "first_time_seen")
     private LocalDate firstTimeSeen;
     @ColumnInfo(name = "last_time_seen")
     private LocalDate lastTimeSeen;
+    @ColumnInfo(name = "seen_by")
+    private List<players> seenBy;
 
     public int getId() {
         return id;
@@ -79,6 +91,18 @@ public class Tesla {
     public LocalDate getLastTimeSeen() {return lastTimeSeen;}
 
     public void setLastTimeSeen(LocalDate lastTimeSeen) {this.lastTimeSeen = lastTimeSeen;}
+
+    public List<players> getSeenBy() {
+        return seenBy;
+    }
+
+    public void setSeenBy(List<players> seenBy) {
+        this.seenBy = seenBy;
+    }
+
+    public void addPlayer(players player) {
+        seenBy.add(player);
+    }
 
     @Override
     public boolean equals(Object o) {

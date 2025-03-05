@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +25,8 @@ import com.sierrapor.teslatracker.data.Tesla;
 import com.sierrapor.teslatracker.data.TeslaViewModel;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FormFragment extends DialogFragment {
 
@@ -31,6 +34,8 @@ public class FormFragment extends DialogFragment {
     private EditText editTextColor;
     private EditText editTextCountry;
     private TeslaViewModel teslaViewModel;
+    private List<Tesla.players> selectedPlayers = new ArrayList<>();
+
 
     @NonNull
     @Override
@@ -45,6 +50,7 @@ public class FormFragment extends DialogFragment {
         editTextCountry = view.findViewById(R.id.edit_text_country);
         CheckBox checkBoxForeign = view.findViewById(R.id.checkbox_foreign);
         LinearLayout layoutCountry = view.findViewById(R.id.layout_country);
+        Button buttonSelectPlayers = view.findViewById(R.id.button_select_players);
 
         // Manejar la visibilidad del campo país según el CheckBox
         checkBoxForeign.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -56,21 +62,48 @@ public class FormFragment extends DialogFragment {
             }
         });
 
+        // Manejar la selección de jugadores
+        buttonSelectPlayers.setOnClickListener(v -> {
+            Tesla.players[] playersArray = Tesla.players.values();
+            String[] playerNames = new String[playersArray.length];
+            boolean[] checkedItems = new boolean[playersArray.length];
+
+            // Llenar el array con los nombres de los jugadores
+            for (int i = 0; i < playersArray.length; i++) {
+                playerNames[i] = playersArray[i].name();
+                if (playersArray[i] == Tesla.players.ERIKA) {
+                    checkedItems[i] = true;  // ERIKA seleccionado por defecto
+                    selectedPlayers.add(playersArray[i]);  // Agregar ERIKA a la lista de seleccionados
+                }
+            }
+
+            AlertDialog.Builder playerDialog = new AlertDialog.Builder(requireContext());
+            playerDialog.setTitle(R.string.player_hint);
+            playerDialog.setMultiChoiceItems(playerNames, checkedItems, (dialog, which, isChecked) -> {
+                if (isChecked) {
+                    selectedPlayers.add(playersArray[which]);
+                } else {
+                    selectedPlayers.remove(playersArray[which]);
+                }
+            });
+            playerDialog.setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss());
+            playerDialog.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
+            playerDialog.show();
+        });
+
         // Construir el diálogo con AlertDialog.Builder
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setView(view)
                 .setTitle(getString(R.string.add_button))
-                .setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
-                    // Simplemente se cierra el diálogo
-                    dialog.cancel();
-                })
+                .setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.cancel())
                 .setPositiveButton(getString(R.string.save), (dialog, which) -> {
                     // Recoger los datos introducidos
                     String plate = editTextPlate.getText().toString().trim();
                     String color = editTextColor.getText().toString().trim();
                     boolean isForeign = checkBoxForeign.isChecked();
                     String country = isForeign ? editTextCountry.getText().toString().trim() : null;
-                    // Validación básica: asegurarse de que los campos no estén vacíos
+
+                    // Validación básica
                     if (plate.isEmpty()) {
                         Toast.makeText(getActivity(), getString(R.string.save_without_complete), Toast.LENGTH_SHORT).show();
                     } else {
@@ -81,17 +114,19 @@ public class FormFragment extends DialogFragment {
                         newTesla.setForeign(isForeign);
                         newTesla.setCountry(isForeign ? country : null);
                         newTesla.setLastTimeSeen(LocalDate.now());
+                        newTesla.setSeenBy(selectedPlayers); // Asignar los jugadores seleccionados
 
                         // Insertar en la base de datos a través del ViewModel
                         teslaViewModel.check(newTesla);
-                        //Mensaje de confirmación al user
+
+                        // Mensaje de confirmación al usuario
                         showConfirmationDialog();
                     }
                 });
 
-
         return builder.create();
     }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
