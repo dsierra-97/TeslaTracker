@@ -100,10 +100,6 @@ public class Tesla {
         this.seenBy = seenBy;
     }
 
-    public void addPlayer(players player) {
-        seenBy.add(player);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

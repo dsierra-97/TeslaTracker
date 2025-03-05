@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeslaViewModel extends AndroidViewModel {
@@ -24,16 +25,16 @@ public class TeslaViewModel extends AndroidViewModel {
     public LiveData<List<Tesla>> getAllTeslas() {
         return allTeslas;
     }
-    public void check(Tesla tesla) {
+    public void check(Tesla newTesla) {
         repository.executorService.execute(() -> {
-            String plate = tesla.getPlate();
+            String plate = newTesla.getPlate();
             Tesla existingTesla = repository.getTeslaByPlate(plate);
             if (existingTesla != null) {
-                Tesla updatedTesla = updateExistingTesla(existingTesla, tesla);
+                Tesla updatedTesla = updateExistingTesla(existingTesla, newTesla);
                 update(updatedTesla);
             } else {
-                tesla.setFirstTimeSeen(LocalDate.now());
-                insert(tesla);
+                newTesla.setFirstTimeSeen(LocalDate.now());
+                insert(newTesla);
             }
         });
     }
@@ -46,13 +47,24 @@ public class TeslaViewModel extends AndroidViewModel {
     private void update(Tesla tesla) {
         repository.update(tesla);
     }
-    private Tesla updateExistingTesla(Tesla existingTesla, Tesla tesla) {
-        existingTesla.setCountry(tesla.getCountry());
-        existingTesla.setColor(tesla.getColor());
-        existingTesla.setForeign(tesla.isForeign());
-        existingTesla.setNumberTimesSeen(tesla.getNumberTimesSeen()+1);
-        existingTesla.setLastTimeSeen(tesla.getLastTimeSeen());
-        existingTesla.setSeenBy(tesla.getSeenBy());
+    private Tesla updateExistingTesla(Tesla existingTesla, Tesla newTesla) {
+        existingTesla.setCountry(newTesla.getCountry());
+        existingTesla.setColor(newTesla.getColor());
+        existingTesla.setForeign(newTesla.isForeign());
+        existingTesla.setNumberTimesSeen(existingTesla.getNumberTimesSeen()+1);
+        existingTesla.setLastTimeSeen(newTesla.getLastTimeSeen());
+        existingTesla.setSeenBy(updateSeenBy(existingTesla, newTesla));
         return existingTesla;
+    }
+
+    private List<Tesla.players> updateSeenBy(Tesla existingTesla, Tesla newTesla) {
+
+        List<Tesla.players> updatedSeenByList = new ArrayList<>(existingTesla.getSeenBy());
+        for (Tesla.players player : newTesla.getSeenBy()) {
+            if (!updatedSeenByList.contains(player)) {
+                updatedSeenByList.add(player);
+            }
+        }
+        return updatedSeenByList;
     }
 }
