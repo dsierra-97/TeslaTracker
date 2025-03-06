@@ -21,4 +21,5 @@
     <string name="is_foreign">It\'s foreign?</string>
     <string name="player_hint">Who saw it?</string>
     <string name="number_times_seen_hint">Number of times seen</string>
+    <string name="number_times_seen_short_hint">Times seen</string>
 </resources>

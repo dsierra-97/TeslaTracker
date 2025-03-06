@@ -2,7 +2,6 @@ package com.sierrapor.teslatracker.form;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,9 +33,6 @@ public class FormFragment extends DialogFragment {
     private EditText editTextColor;
     private EditText editTextCountry;
     private TeslaViewModel teslaViewModel;
-    private List<Tesla.players> selectedPlayers = new ArrayList<>();
-
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,6 +41,7 @@ public class FormFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_form, null);
 
         // Referenciar los campos de entrada
+        List<Tesla.players> selectedPlayers = new ArrayList<>();
         editTextPlate = view.findViewById(R.id.edit_text_plate);
         editTextColor = view.findViewById(R.id.edit_text_color);
         editTextCountry = view.findViewById(R.id.edit_text_country);
@@ -139,7 +136,9 @@ public class FormFragment extends DialogFragment {
     private void showConfirmationDialog() {
         Dialog dialog = new Dialog(requireContext());
         dialog.setContentView(R.layout.dialog_confirmation);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // Hace el fondo del diálogo transparente
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
         dialog.setCancelable(true);
 
         ImageView imageView = dialog.findViewById(R.id.image_confirmation);

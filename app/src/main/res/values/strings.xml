@@ -35,5 +35,6 @@
     <string name="player_hint">¿Quién lo ha visto?</string>
     <!-- List -->
     <string name="number_times_seen_hint">Número de veces visto</string>
+    <string name="number_times_seen_short_hint">Veces visto</string>
 
 </resources>
