@@ -8,7 +8,7 @@
     <item
         android:id="@+id/achievementsFragment"
         android:icon="@drawable/achievement"
-        android:title="@string/achievements" />
+        android:title="@string/stats" />
     <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/settings"

@@ -17,9 +17,9 @@
     <string name="language_value_en" translatable="false">en</string>
 
     <!-- Menú -->
-    <string name="list">Lista</string>
-    <string name="achievements">Logros</string>
-    <string name="settings">Ajustes</string>
+    <string name="list">LISTA</string>
+    <string name="stats">ESTADISTICAS</string>
+    <string name="settings">AJUSTES</string>
     <string name="hello_blank_fragment">Hola fragmento en blanco</string>
 
     <!-- Form -->

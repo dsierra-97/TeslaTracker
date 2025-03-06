@@ -21,7 +21,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 /*              TODO: Decidir que hacer con esta puta mierda
                 Estas lineas comentadas solucionan el bug de no actualizar la configuración
 º               al cambiar el idioma, pero por otra parte reinician la actividad al completo y
-                te llevan al fragmento de inicio, que de momento es logros pero que será form
+                te llevan al fragmento de inicio
 
                 Intent intent = requireActivity().getIntent();
                  requireActivity().finish();
