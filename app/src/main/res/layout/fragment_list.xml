@@ -4,7 +4,7 @@
     android:id="@+id/listFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#728C0C"
+    android:background="@color/colorBackground"
     tools:context=".list.ListFragment">
 
     <androidx.recyclerview.widget.RecyclerView

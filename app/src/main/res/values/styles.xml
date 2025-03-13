@@ -15,4 +15,14 @@
         <item name="android:fontFamily">@font/tesla_font</item>
     </style>
 
+    <style name="CustomFAB" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="tint">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="CustomSwitch" parent="Widget.Material3.CompoundButton.Switch">
+        <item name="thumbTint">@color/colorPrimary</item>
+        <item name="trackTint">@color/colorSecondaryText</item>
+    </style>
+
 </resources>

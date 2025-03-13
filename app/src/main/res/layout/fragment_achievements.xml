@@ -3,14 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1177A6"
+    android:background="@color/colorBackground"
     tools:context=".achievements.AchievementsFragment"
     android:id="@+id/achievementsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <!-- Antiguo color azul android:background="#1177A6" -->
+
 
 </FrameLayout>

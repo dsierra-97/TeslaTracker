@@ -4,14 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".settings.SettingsFragment"
+    android:background="@color/colorBackground"
     android:id="@+id/settingsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#6B6969"
-        android:text="@string/hello_blank_fragment"
-        android:textColor="#F3E5F5" />
 
 </FrameLayout>

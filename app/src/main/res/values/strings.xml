@@ -18,7 +18,7 @@
 
     <!-- Menú -->
     <string name="list">LISTA</string>
-    <string name="stats">ESTADISTICAS</string>
+    <string name="achievements">LOGROS</string>
     <string name="settings">AJUSTES</string>
     <string name="hello_blank_fragment">Hola fragmento en blanco</string>
 
@@ -36,5 +36,9 @@
     <!-- List -->
     <string name="number_times_seen_hint">Número de veces visto</string>
     <string name="number_times_seen_short_hint">Veces visto</string>
+
+    <!-- Modo Oscuro -->
+    <string name="dark_mode">Modo Oscuro</string>
+    <string name="dark_mode_summary">Activa o desactiva el modo oscuro</string>
 
 </resources>

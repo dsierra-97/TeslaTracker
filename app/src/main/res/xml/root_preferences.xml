@@ -8,4 +8,11 @@
         android:entries="@array/language_entries"
         android:entryValues="@array/language_values"
         android:defaultValue="@string/language_value_es" />
+
+    <!-- Modo Oscuro -->
+    <SwitchPreferenceCompat
+        android:key="dark_mode"
+        android:title="@string/dark_mode"
+        android:summary="@string/dark_mode_summary"
+        android:defaultValue="false" />
 </PreferenceScreen>

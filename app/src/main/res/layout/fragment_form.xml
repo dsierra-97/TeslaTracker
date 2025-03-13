@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".form.FormFragment"
     android:orientation="vertical"
-    android:id="@+id/formFragment">
+    android:id="@+id/formFragment"
+    android:padding="16dp">
 
-    <!-- Campo para la placa del Tesla -->
+    <!-- Campo para la matricula del Tesla -->
     <EditText
         android:id="@+id/edit_text_plate"
         android:layout_width="match_parent"
@@ -42,6 +43,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/country_hint" />
     </LinearLayout>
+
     <Button
         android:id="@+id/button_select_players"
         android:layout_width="wrap_content"

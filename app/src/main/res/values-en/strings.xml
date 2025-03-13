@@ -3,7 +3,7 @@
     <string name="app_name">TeslaTracker</string>
     <string name="example_message">TeslaTracker Main View</string>
     <string name="list">LIST</string>
-    <string name="stats">STATS</string>
+    <string name="achievements">ACHIEVEMENTS</string>
     <string name="settings">SETTINGS</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pref_language">Language</string>
@@ -22,4 +22,6 @@
     <string name="player_hint">Who saw it?</string>
     <string name="number_times_seen_hint">Number of times seen</string>
     <string name="number_times_seen_short_hint">Times seen</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_summary">Activate or desactivate the dark mode</string>
 </resources>
