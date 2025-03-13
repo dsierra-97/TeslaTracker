@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -32,6 +33,9 @@ android {
 }
 
 dependencies {
+    //Hilt
+    implementation(libs.hilt.android)
+    annotationProcessor(libs.hilt.compiler)
     // Dependencias comunes de Android
     implementation(libs.appcompat)
     implementation(libs.material)
