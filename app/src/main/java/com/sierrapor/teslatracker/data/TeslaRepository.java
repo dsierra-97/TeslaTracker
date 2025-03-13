@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class TeslaRepository {
     private final TeslaDao teslaDao;
     final ExecutorService executorService;
-
+    @Inject
     public TeslaRepository(TeslaDao teslaDao) {
         this.teslaDao = teslaDao;
         this.executorService = Executors.newSingleThreadExecutor();

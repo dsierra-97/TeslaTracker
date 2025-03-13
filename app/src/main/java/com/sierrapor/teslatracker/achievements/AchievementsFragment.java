@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 
 import com.sierrapor.teslatracker.R;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AchievementsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 public class AchievementsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match

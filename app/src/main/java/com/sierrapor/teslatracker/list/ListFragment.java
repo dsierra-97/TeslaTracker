@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import com.sierrapor.teslatracker.R;
 import com.sierrapor.teslatracker.data.TeslaViewModel;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ListFragment extends Fragment {
     private TeslaViewModel teslaViewModel;
     private TeslaAdapter adapter;

@@ -27,7 +27,9 @@ import com.sierrapor.teslatracker.form.FormFragment;
 
 import java.util.Locale;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     @Override

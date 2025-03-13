@@ -11,19 +11,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class TeslaViewModel extends AndroidViewModel {
     private final TeslaRepository repository;
-    private final LiveData<List<Tesla>> allTeslas;
 
-    public TeslaViewModel(@NonNull Application application) {
+    @Inject
+    public TeslaViewModel(@NonNull Application application, TeslaRepository repository) {
         super(application);
-        TeslaDataBase db = TeslaDataBase.getInstance(application);
-        TeslaDao teslaDao = db.teslaDao();
-        repository = new TeslaRepository(teslaDao);
-        allTeslas = repository.getAllTeslas();
+        this.repository = repository;
     }
     public LiveData<List<Tesla>> getAllTeslas() {
-        return allTeslas;
+
+        return repository.getAllTeslas();
     }
     public void check(Tesla newTesla) {
         repository.executorService.execute(() -> {

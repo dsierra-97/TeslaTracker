@@ -27,6 +27,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class FormFragment extends DialogFragment {
 
     private EditText editTextPlate;
