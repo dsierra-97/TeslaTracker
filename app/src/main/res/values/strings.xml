@@ -33,6 +33,7 @@
     <string name="country_hint">País</string>
     <string name="is_foreign">¿Es extrangero?</string>
     <string name="player_hint">¿Quién lo ha visto?</string>
+    <string name="plate_too_long">La matrícula es demasiado larga</string>
     <!-- List -->
     <string name="number_times_seen_hint">Número de veces visto</string>
     <string name="number_times_seen_short_hint">Veces visto</string>

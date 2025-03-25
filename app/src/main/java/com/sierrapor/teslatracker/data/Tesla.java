@@ -1,6 +1,7 @@
 package com.sierrapor.teslatracker.data;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Size;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -17,11 +18,13 @@ public class Tesla {
         ERIKA,
         MARINA,
         DIEGO,
-        MANU
+        MANU,
+        SUSI
     }
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
+    @Size(max = 8)
     @ColumnInfo(name = "plate")
     private String plate;
     @ColumnInfo(name = "color")

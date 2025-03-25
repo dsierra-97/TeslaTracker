@@ -98,7 +98,7 @@ public class FormFragment extends DialogFragment {
                 .setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.cancel())
                 .setPositiveButton(getString(R.string.save), (dialog, which) -> {
                     // Recoger los datos introducidos
-                    String plate = editTextPlate.getText().toString().trim();
+                    String plate = editTextPlate.getText().toString().toUpperCase().trim();
                     String color = editTextColor.getText().toString().trim();
                     boolean isForeign = checkBoxForeign.isChecked();
                     String country = isForeign ? editTextCountry.getText().toString().trim() : null;
@@ -106,18 +106,10 @@ public class FormFragment extends DialogFragment {
                     // Validación básica
                     if (plate.isEmpty()) {
                         Toast.makeText(getActivity(), getString(R.string.save_without_complete), Toast.LENGTH_SHORT).show();
+                    } else if(plate.length() > 10){
+                        Toast.makeText(getActivity(), getString(R.string.plate_too_long), Toast.LENGTH_SHORT).show();
                     } else {
-                        // Crear un nuevo objeto Tesla y asignar los valores
-                        Tesla newTesla = new Tesla();
-                        newTesla.setPlate(plate);
-                        newTesla.setColor(color);
-                        newTesla.setForeign(isForeign);
-                        newTesla.setCountry(isForeign ? country : null);
-                        newTesla.setLastTimeSeen(LocalDate.now());
-                        newTesla.setSeenBy(selectedPlayers); // Asignar los jugadores seleccionados
-
-                        // Insertar en la base de datos a través del ViewModel
-                        teslaViewModel.check(newTesla);
+                        saveTesla(plate, color, isForeign, country, selectedPlayers);
 
                         // Mensaje de confirmación al usuario
                         showConfirmationDialog();
@@ -134,6 +126,19 @@ public class FormFragment extends DialogFragment {
         // Obtener el TeslaViewModel del Activity que hospeda el diálogo.
         // Esto asegura que se comparta el mismo ViewModel con el resto de la aplicación (por ejemplo, para actualizar la lista).
         teslaViewModel = new ViewModelProvider(requireActivity()).get(TeslaViewModel.class);
+    }
+
+    private void saveTesla(String plate, String color, boolean isForeign, String country, List<Tesla.players> selectedPlayers) {
+        // Crea un nuevo objeto Tesla, asigna los valores e inserta en la base de datos a través del ViewModel
+        Tesla newTesla = new Tesla();
+        newTesla.setPlate(plate);
+        newTesla.setColor(color);
+        newTesla.setForeign(isForeign);
+        newTesla.setCountry(isForeign ? country : null);
+        newTesla.setLastTimeSeen(LocalDate.now());
+        newTesla.setSeenBy(selectedPlayers);
+
+        teslaViewModel.check(newTesla);
     }
 
     private void showConfirmationDialog() {

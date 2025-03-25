@@ -20,6 +20,7 @@
     <string name="country_hint">Country</string>
     <string name="is_foreign">It\'s foreign?</string>
     <string name="player_hint">Who saw it?</string>
+    <string name="plate_too_long">The plate is too long</string>
     <string name="number_times_seen_hint">Number of times seen</string>
     <string name="number_times_seen_short_hint">Times seen</string>
     <string name="dark_mode">Dark Mode</string>
