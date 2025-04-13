@@ -25,6 +25,9 @@ import com.sierrapor.teslatracker.data.TeslaViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class DetailFragment extends Fragment {
 
     private EditText editPlate, editColor, editCountry, editNumber;
