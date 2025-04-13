@@ -4,16 +4,29 @@
     android:id="@+id/nav_graph.xml"
     app:startDestination="@+id/achievementsFragment">
 
-<fragment
-    android:id="@+id/listFragment"
-    android:name="com.sierrapor.teslatracker.list.ListFragment"
-    android:label="@string/list" />
-<fragment
-    android:id="@+id/achievementsFragment"
-    android:name="com.sierrapor.teslatracker.achievements.AchievementsFragment"
-    android:label="@string/achievements" />
-<fragment
-    android:id="@+id/settingsFragment"
-    android:name="com.sierrapor.teslatracker.settings.SettingsFragment"
-    android:label="@string/settings" />
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.sierrapor.teslatracker.list.ListFragment"
+        android:label="@string/list">
+
+        <action
+            android:id="@+id/action_listFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="com.sierrapor.teslatracker.achievements.AchievementsFragment"
+        android:label="@string/achievements" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.sierrapor.teslatracker.settings.SettingsFragment"
+        android:label="@string/settings" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.sierrapor.teslatracker.detail.DetailFragment"
+        android:label="@string/details">
+        <argument
+            android:name="tesla"
+            app:argType="com.sierrapor.teslatracker.data.Tesla" />
+    </fragment>
 </navigation>

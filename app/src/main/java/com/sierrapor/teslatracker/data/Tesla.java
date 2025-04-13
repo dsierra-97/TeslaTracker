@@ -7,12 +7,13 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(tableName = "teslas", indices = {@Index(value = "plate", unique = true)})
-public class Tesla {
+public class Tesla implements Serializable {
 
     public enum players{
         ERIKA,
@@ -28,7 +29,7 @@ public class Tesla {
     @ColumnInfo(name = "plate")
     private String plate;
     @ColumnInfo(name = "color")
-    private String color = "feo";
+    private String color;
     @ColumnInfo(name = "foreign")
     private boolean foreign;
     @ColumnInfo(name = "country")

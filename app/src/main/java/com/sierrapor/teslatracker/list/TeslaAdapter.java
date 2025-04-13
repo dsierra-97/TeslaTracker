@@ -1,11 +1,13 @@
 package com.sierrapor.teslatracker.list;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sierrapor.teslatracker.R;
@@ -64,6 +66,12 @@ public class TeslaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             itemHolder.plateTextView.setText(tesla.getPlate());
             itemHolder.colorTextView.setText(tesla.getColor());
             itemHolder.countTextView.setText(String.valueOf(tesla.getNumberTimesSeen()));
+
+            itemHolder.itemView.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("tesla", tesla);
+                Navigation.findNavController(v).navigate(R.id.action_listFragment_to_detailFragment, bundle);
+            });
         }
     }
 

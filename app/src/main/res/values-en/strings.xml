@@ -24,5 +24,8 @@
     <string name="number_times_seen_hint">Number of times seen</string>
     <string name="number_times_seen_short_hint">Times seen</string>
     <string name="dark_mode">Dark Mode</string>
-    <string name="dark_mode_summary">Activate or desactivate the dark mode</string>
+    <string name="dark_mode_summary">Activate or deactivate the dark mode</string>
+    <string name="edit">Edit</string>
+    <string name="details">Details</string>
+    <string name="seen_by">Seen by</string>
 </resources>

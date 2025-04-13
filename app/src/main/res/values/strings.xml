@@ -20,7 +20,6 @@
     <string name="list">LISTA</string>
     <string name="achievements">LOGROS</string>
     <string name="settings">AJUSTES</string>
-    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
 
     <!-- Form -->
     <string name="add_button">Añadir Tesla</string>
@@ -42,4 +41,8 @@
     <string name="dark_mode">Modo Oscuro</string>
     <string name="dark_mode_summary">Activa o desactiva el modo oscuro</string>
 
+    <!-- Detail -->
+    <string name="details">Detalles</string>
+    <string name="edit">Editar</string>
+    <string name="seen_by">Observado por</string>
 </resources>
