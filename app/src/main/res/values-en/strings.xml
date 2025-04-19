@@ -27,6 +27,7 @@
     <string name="details">Details</string>
     <string name="seen_by">Seen by</string>
     <string name="select_a_player">Select a player</string>
+    <string name="save_without_complete_plate_and_color">Introduce plate and color</string>
     <string name="save_without_complete_plate">Introduce a plate</string>
     <string name="save_without_complete_color">Introduce a color</string>
 </resources>

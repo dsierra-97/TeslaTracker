@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="88dp"
         android:hint="@string/plate_hint"
-        android:inputType="text" />
+        android:inputType="text"
+        android:imeOptions="actionNext" />
 
     <!-- Campo para el color -->
     <EditText
@@ -22,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:hint="@string/color_hint"
-        android:inputType="text" />
+        android:inputType="text"
+        android:imeOptions="actionDone"/>
 
     <CheckBox
         android:id="@+id/checkbox_foreign"
@@ -41,7 +43,9 @@
             android:id="@+id/edit_text_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/country_hint" />
+            android:hint="@string/country_hint"
+            android:inputType="text"
+            android:imeOptions="actionDone"/>
     </LinearLayout>
 
     <Button
@@ -49,5 +53,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/player_hint" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_players"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:singleLine="false"/>
 
 </LinearLayout>

@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.chip.Chip;
@@ -123,7 +124,7 @@ public class DetailFragment extends Fragment {
     @NonNull
     private ArrayAdapter<Object> getObjectArrayAdapter(List<Object> spinnerItems) {
         ArrayAdapter<Object> adapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_spinner_item, spinnerItems
+                requireContext(), R.layout.item_spinner_player, spinnerItems
         ) {
             @NonNull
             @Override
@@ -140,7 +141,7 @@ public class DetailFragment extends Fragment {
                 return getView(position, convertView, parent);
             }
         };
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.item_spinner_player);
         return adapter;
     }
 
@@ -148,7 +149,6 @@ public class DetailFragment extends Fragment {
         editPlate.setText(tesla.getPlate());
         editColor.setText(tesla.getColor());
         editCountry.setText(tesla.getCountry());
-        // Muestra el número de veces visto
         editNumber.setText(String.valueOf(tesla.getNumberTimesSeen()));
         checkboxForeign.setChecked(tesla.isForeign());
 
@@ -200,12 +200,11 @@ public class DetailFragment extends Fragment {
 
         for (Tesla.players player : selectedPlayers) {
             Chip chip = new Chip(requireContext());
-            chip.setText(player.name() + " ✖");
-
-            // Personaliza el Chip: fondo, márgenes, etc.
-            chip.setChipBackgroundColorResource(android.R.color.holo_blue_light);
-            chip.setTextColor(getResources().getColor(android.R.color.white));
-            chip.setClickable(isEditMode); // Solo clickeable en modo edición
+            chip.setText(player.name());
+            chip.setChipBackgroundColor(ContextCompat.getColorStateList(requireContext(), R.color.colorBackground));;
+            chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground));
+            chip.setCloseIconVisible(true);
+            chip.setClickable(isEditMode);
             chip.setCheckable(false);
 
             // Solo permitir eliminar si estamos en modo edición.

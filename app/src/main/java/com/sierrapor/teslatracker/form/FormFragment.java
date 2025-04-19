@@ -16,9 +16,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.sierrapor.teslatracker.R;
 import com.sierrapor.teslatracker.data.Tesla;
 import com.sierrapor.teslatracker.data.TeslaViewModel;
@@ -49,6 +52,7 @@ public class FormFragment extends DialogFragment {
         CheckBox checkBoxForeign = view.findViewById(R.id.checkbox_foreign);
         LinearLayout layoutCountry = view.findViewById(R.id.layout_country);
         Button buttonSelectPlayers = view.findViewById(R.id.button_select_players);
+        ChipGroup chipGroupPlayers = view.findViewById(R.id.chip_group_players);
 
         checkBoxForeign.setOnCheckedChangeListener((buttonView, isChecked) -> {
             layoutCountry.setVisibility(isChecked ? View.VISIBLE : View.GONE);
@@ -62,24 +66,38 @@ public class FormFragment extends DialogFragment {
 
             for (int i = 0; i < playersArray.length; i++) {
                 playerNames[i] = playersArray[i].name();
-                if (playersArray[i] == Tesla.players.ERIKA) {
-                    checkedItems[i] = true;
-                    selectedPlayers.add(playersArray[i]);
-                }
+                checkedItems[i] = selectedPlayers.contains(playersArray[i]);
             }
 
-            new AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.player_hint)
-                    .setMultiChoiceItems(playerNames, checkedItems, (dialog, which, isChecked) -> {
-                        if (isChecked) {
-                            selectedPlayers.add(playersArray[which]);
-                        } else {
-                            selectedPlayers.remove(playersArray[which]);
-                        }
-                    })
-                    .setPositiveButton(R.string.ok, null)
-                    .setNegativeButton(R.string.cancel, null)
-                    .show();
+            AlertDialog.Builder playerDialog = new AlertDialog.Builder(requireContext());
+            playerDialog.setTitle(R.string.player_hint);
+            playerDialog.setMultiChoiceItems(playerNames, checkedItems, (dialog, which, isChecked) -> {
+                if (isChecked) {
+                    if (!selectedPlayers.contains(playersArray[which])) {
+                        selectedPlayers.add(playersArray[which]);
+                    }
+                } else {
+                    selectedPlayers.remove(playersArray[which]);
+                }
+            });
+            playerDialog.setPositiveButton(R.string.ok,(dialog, which) -> {
+                // Actualizar chips al confirmar selección
+                chipGroupPlayers.removeAllViews(); // Limpiar anteriores
+                for (Tesla.players player : selectedPlayers) {
+                    Chip chip = new Chip(requireContext());
+                    chip.setText(player.name());
+                    chip.setChipBackgroundColor(ContextCompat.getColorStateList(requireContext(), R.color.colorBackground));;
+                    chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground));
+                    chip.setCloseIconVisible(true); // Hacemos visible el ícono de cierre
+                    chip.setOnCloseIconClickListener(view1 -> {
+                        selectedPlayers.remove(player);
+                        chipGroupPlayers.removeView(chip);
+                    });
+                    chipGroupPlayers.addView(chip);
+                }
+            });
+            playerDialog.setNegativeButton(R.string.cancel, null);
+            playerDialog.show();
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
@@ -98,9 +116,11 @@ public class FormFragment extends DialogFragment {
                 boolean isForeign = checkBoxForeign.isChecked();
                 String country = isForeign ? editTextCountry.getText().toString().trim() : null;
 
-                if (plate.isEmpty()) {
+                if (plate.isEmpty() && color.isEmpty()) {
+                    Toast.makeText(getActivity(), getString(R.string.save_without_complete_plate_and_color), Toast.LENGTH_SHORT).show();
+                } else if (plate.isEmpty()) {
                     Toast.makeText(getActivity(), getString(R.string.save_without_complete_plate), Toast.LENGTH_SHORT).show();
-                } else if (color.isEmpty()) {
+                }else if (color.isEmpty()) {
                     Toast.makeText(getActivity(), getString(R.string.save_without_complete_color), Toast.LENGTH_SHORT).show();
                 } else if (plate.length() > 10) {
                     Toast.makeText(getActivity(), getString(R.string.plate_too_long), Toast.LENGTH_SHORT).show();
@@ -112,7 +132,7 @@ public class FormFragment extends DialogFragment {
             });
         });
 
-        dialog.show(); // <--- importante mostrar antes de usar getButton
+        dialog.show();
         return dialog;
     }
 

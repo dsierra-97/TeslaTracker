@@ -31,7 +31,9 @@ android:layout_height="match_parent">
             android:id="@+id/edit_plate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/plate_hint" />
+            android:hint="@string/plate_hint"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
 
         <!-- COLOR -->
         <TextView
@@ -48,7 +50,9 @@ android:layout_height="match_parent">
             android:id="@+id/edit_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/color_hint" />
+            android:hint="@string/color_hint"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
 
         <!-- NUMBER OF TIMES SEEN -->
         <TextView
@@ -66,7 +70,8 @@ android:layout_height="match_parent">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/number_times_seen_hint"
-            android:inputType="number" />
+            android:inputType="number"
+            android:imeOptions="actionDone"/>
 
         <!-- CHECKBOX FOREIGN -->
         <CheckBox
@@ -98,7 +103,9 @@ android:layout_height="match_parent">
                 android:id="@+id/edit_country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/country_hint" />
+                android:hint="@string/country_hint"
+                android:inputType="text"
+                android:imeOptions="actionDone"/>
         </LinearLayout>
 
         <!-- TÍTULO "OBSERVADO POR" -->
@@ -151,14 +158,16 @@ android:layout_height="match_parent">
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/edit"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:textSize="18sp"/>
 
     <Button
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/save"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:textSize="18sp"/>
 </LinearLayout>
 
 </RelativeLayout>

@@ -23,6 +23,7 @@
 
     <!-- Form -->
     <string name="add_button">Añadir Tesla</string>
+    <string name="save_without_complete_plate_and_color">Introduce matrícula y color</string>
     <string name="save_without_complete_plate">Introduce una matrícula</string>
     <string name="save_without_complete_color">Introduce un color</string>
     <string name="ok" translatable="false">OK</string>
