@@ -42,9 +42,23 @@ public class TeslaViewModel extends AndroidViewModel {
             }
         });
     }
-    public void delete(Tesla tesla) {
-        repository.delete(tesla);
+
+    public void edit (Tesla editedTesla){
+        repository.executorService.execute(() -> {
+        Tesla currentTesla = repository.getTesla(editedTesla.getId());
+        if(editedTesla.getPlate() == null || editedTesla.getPlate().isEmpty()){
+            editedTesla.setPlate(currentTesla.getPlate());
+        }
+        if(editedTesla.getColor() == null || editedTesla.getColor().isEmpty()){
+            editedTesla.setColor(currentTesla.getColor());
+        }
+        if(editedTesla.getNumberTimesSeen() == null || editedTesla.getNumberTimesSeen() == 0){
+            editedTesla.setNumberTimesSeen(currentTesla.getNumberTimesSeen());
+        }
+        update(editedTesla);
+        });
     }
+    public void delete(Tesla tesla) { repository.delete(tesla); }
     private void insert(Tesla tesla) {
         repository.insert(tesla);
     }

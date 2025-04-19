@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -49,6 +49,7 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        viewModel = new ViewModelProvider(this).get(TeslaViewModel.class);
 
         // Obtención de referencias del layout.
         editPlate = view.findViewById(R.id.edit_plate);
@@ -190,8 +191,7 @@ public class DetailFragment extends Fragment {
         }
         tesla.setForeign(checkboxForeign.isChecked());
         tesla.setSeenBy(new ArrayList<>(selectedPlayers));
-        //TODO: Implementar el método edit en el viewModel
-        // viewModel.edit(tesla);
+        viewModel.edit(tesla);
     }
 
     private void updateChips() {

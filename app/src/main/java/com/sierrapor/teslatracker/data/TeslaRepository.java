@@ -33,7 +33,7 @@ public class TeslaRepository {
     public Tesla getTeslaByPlateAndColor(String plate, String color) {
         return teslaDao.getTeslaByPlateAndColor(plate, color);
     }
-    public LiveData<Tesla> getTesla(int id) {
+    public Tesla getTesla(int id) {
         return teslaDao.getTesla(id);
     }
 }

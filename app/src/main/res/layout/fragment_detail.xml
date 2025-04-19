@@ -17,42 +17,67 @@ android:layout_height="match_parent">
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- PLATE -->
-        <TextView
-            android:id="@+id/label_plate"
+        <!-- PLATE + COLOR -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/plate_hint"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp"/>
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:baselineAligned="false"
+            android:layout_marginBottom="12dp">
 
-        <EditText
-            android:id="@+id/edit_plate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/plate_hint"
-            android:inputType="text"
-            android:imeOptions="actionNext"/>
+            <!-- PLATE -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginEnd="8dp">
 
-        <!-- COLOR -->
-        <TextView
-            android:id="@+id/label_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/color_hint"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp" />
+                <TextView
+                    android:id="@+id/label_plate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plate_hint"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
 
-        <EditText
-            android:id="@+id/edit_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/color_hint"
-            android:inputType="text"
-            android:imeOptions="actionNext"/>
+                <EditText
+                    android:id="@+id/edit_plate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/plate_hint"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"/>
+            </LinearLayout>
+
+            <!-- COLOR -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:id="@+id/label_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/color_hint"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <EditText
+                    android:id="@+id/edit_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/color_hint"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <!-- NUMBER OF TIMES SEEN -->
         <TextView
@@ -62,7 +87,7 @@ android:layout_height="match_parent">
             android:text="@string/number_times_seen_hint"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp" />
 
         <EditText
@@ -73,39 +98,50 @@ android:layout_height="match_parent">
             android:inputType="number"
             android:imeOptions="actionDone"/>
 
-        <!-- CHECKBOX FOREIGN -->
-        <CheckBox
-            android:id="@+id/checkbox_foreign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/is_foreign" />
-
-        <!-- COUNTRY (cabezal + campo) -->
-        <!-- Envolvemos ambos en un layout para mostrarlos/ocultarlos juntos -->
+        <!-- FOREIGN + COUNTRY -->
         <LinearLayout
-            android:id="@+id/layout_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp">
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="16dp"
+            android:baselineAligned="false">
 
-            <TextView
-                android:id="@+id/label_country"
-                android:layout_width="match_parent"
+            <!-- CHECKBOX FOREIGN -->
+            <CheckBox
+                android:id="@+id/checkbox_foreign"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/country_hint"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="4dp" />
+                android:layout_weight="1"
+                android:text="@string/is_foreign"
+                android:layout_marginEnd="8dp" />
 
-            <EditText
-                android:id="@+id/edit_country"
-                android:layout_width="match_parent"
+            <!-- COUNTRY -->
+            <LinearLayout
+                android:id="@+id/layout_country"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/country_hint"
-                android:inputType="text"
-                android:imeOptions="actionDone"/>
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:id="@+id/label_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/country_hint"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <EditText
+                    android:id="@+id/edit_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/country_hint"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"/>
+            </LinearLayout>
         </LinearLayout>
 
         <!-- TÍTULO "OBSERVADO POR" -->
@@ -119,7 +155,7 @@ android:layout_height="match_parent">
             android:layout_marginTop="16dp"
             android:layout_marginBottom="4dp" />
 
-        <!-- CONTENEDOR DE SPINNER (solo visible en modo edit) -->
+        <!-- SPINNER -->
         <LinearLayout
             android:id="@+id/playerSelectionLayout"
             android:layout_width="match_parent"
@@ -130,18 +166,20 @@ android:layout_height="match_parent">
             <Spinner
                 android:id="@+id/playerSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:dropDownVerticalOffset="8dp"
+                android:padding="8dp"/>
         </LinearLayout>
 
-        <!-- CHIPS DE JUGADORES -->
+        <!-- CHIPS -->
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/playerChips"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             app:chipSpacing="12dp" />
-
     </LinearLayout>
+
 </ScrollView>
 
 <!-- BOTONES FIJOS ABAJO -->

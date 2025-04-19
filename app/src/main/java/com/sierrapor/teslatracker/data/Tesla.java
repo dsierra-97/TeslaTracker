@@ -36,7 +36,7 @@ public class Tesla implements Serializable {
     private String country;
 
     @ColumnInfo(name = "number_times_seen")
-    private int numberTimesSeen = 1;
+    private Integer numberTimesSeen = 1;
     @ColumnInfo(name = "first_time_seen")
     private LocalDate firstTimeSeen;
     @ColumnInfo(name = "last_time_seen")
@@ -84,9 +84,9 @@ public class Tesla implements Serializable {
         this.country = country;
     }
 
-    public int getNumberTimesSeen() {return numberTimesSeen;}
+    public Integer getNumberTimesSeen() {return numberTimesSeen;}
 
-    public void setNumberTimesSeen(int numberTimesSeen) {this.numberTimesSeen = numberTimesSeen;}
+    public void setNumberTimesSeen(Integer numberTimesSeen) {this.numberTimesSeen = numberTimesSeen;}
 
     public LocalDate getFirstTimeSeen() {return firstTimeSeen;}
 

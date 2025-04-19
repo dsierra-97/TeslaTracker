@@ -35,6 +35,7 @@ android {
 dependencies {
     //Hilt
     implementation(libs.hilt.android)
+    implementation(libs.lifecycle.viewmodel.android)
     annotationProcessor(libs.hilt.compiler)
     // Dependencias comunes de Android
     implementation(libs.appcompat)
