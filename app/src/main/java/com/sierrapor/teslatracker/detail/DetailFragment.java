@@ -25,6 +25,7 @@ import com.sierrapor.teslatracker.data.TeslaViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -99,25 +100,7 @@ public class DetailFragment extends Fragment {
         List<Object> spinnerItems = new ArrayList<>();
         spinnerItems.add(getString(R.string.select_a_player));
         spinnerItems.addAll(List.of(Tesla.players.values()));
-        ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(
-                requireContext(), android.R.layout.simple_spinner_item, spinnerItems
-        ) {
-            @NonNull
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                ((TextView) view).setText(position == 0
-                        ? getString(R.string.select_a_player)
-                        : ((Tesla.players) getItem(position)).name());
-                return view;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                return getView(position, convertView, parent);
-            }
-        };
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<Object> adapter = getObjectArrayAdapter(spinnerItems);
         spinnerPlayers.setAdapter(adapter);
 
         spinnerPlayers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -136,6 +119,31 @@ public class DetailFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
+
+    @NonNull
+    private ArrayAdapter<Object> getObjectArrayAdapter(List<Object> spinnerItems) {
+        ArrayAdapter<Object> adapter = new ArrayAdapter<>(
+                requireContext(), android.R.layout.simple_spinner_item, spinnerItems
+        ) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setText(position == 0
+                        ? getString(R.string.select_a_player)
+                        : ((Tesla.players) Objects.requireNonNull(getItem(position))).name());
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                return getView(position, convertView, parent);
+            }
+        };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+
     private void showData() {
         editPlate.setText(tesla.getPlate());
         editColor.setText(tesla.getColor());
