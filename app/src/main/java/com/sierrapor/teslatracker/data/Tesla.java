@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-@Entity(tableName = "teslas", indices = {@Index(value = "plate", unique = true)})
+@Entity(tableName = "teslas", indices = {@Index(value = {"plate", "color"}, unique = true)})
 public class Tesla implements Serializable {
 
     public enum players{

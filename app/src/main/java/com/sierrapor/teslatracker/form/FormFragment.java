@@ -39,11 +39,9 @@ public class FormFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Inflar el layout del diálogo
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_form, null);
 
-        // Referenciar los campos de entrada
         List<Tesla.players> selectedPlayers = new ArrayList<>();
         editTextPlate = view.findViewById(R.id.edit_text_plate);
         editTextColor = view.findViewById(R.id.edit_text_color);
@@ -52,72 +50,72 @@ public class FormFragment extends DialogFragment {
         LinearLayout layoutCountry = view.findViewById(R.id.layout_country);
         Button buttonSelectPlayers = view.findViewById(R.id.button_select_players);
 
-        // Manejar la visibilidad del campo país según el CheckBox
         checkBoxForeign.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                layoutCountry.setVisibility(View.VISIBLE);
-            } else {
-                layoutCountry.setVisibility(View.GONE);
-                editTextCountry.setText(""); // Limpiar el campo si se desmarca
-            }
+            layoutCountry.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            if (!isChecked) editTextCountry.setText("");
         });
 
-        // Manejar la selección de jugadores
         buttonSelectPlayers.setOnClickListener(v -> {
             Tesla.players[] playersArray = Tesla.players.values();
             String[] playerNames = new String[playersArray.length];
             boolean[] checkedItems = new boolean[playersArray.length];
 
-            // Llenar el array con los nombres de los jugadores
             for (int i = 0; i < playersArray.length; i++) {
                 playerNames[i] = playersArray[i].name();
                 if (playersArray[i] == Tesla.players.ERIKA) {
-                    checkedItems[i] = true;  // ERIKA seleccionado por defecto
-                    selectedPlayers.add(playersArray[i]);  // Agregar ERIKA a la lista de seleccionados
+                    checkedItems[i] = true;
+                    selectedPlayers.add(playersArray[i]);
                 }
             }
 
-            AlertDialog.Builder playerDialog = new AlertDialog.Builder(requireContext());
-            playerDialog.setTitle(R.string.player_hint);
-            playerDialog.setMultiChoiceItems(playerNames, checkedItems, (dialog, which, isChecked) -> {
-                if (isChecked) {
-                    selectedPlayers.add(playersArray[which]);
-                } else {
-                    selectedPlayers.remove(playersArray[which]);
-                }
-            });
-            playerDialog.setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss());
-            playerDialog.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
-            playerDialog.show();
+            new AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.player_hint)
+                    .setMultiChoiceItems(playerNames, checkedItems, (dialog, which, isChecked) -> {
+                        if (isChecked) {
+                            selectedPlayers.add(playersArray[which]);
+                        } else {
+                            selectedPlayers.remove(playersArray[which]);
+                        }
+                    })
+                    .setPositiveButton(R.string.ok, null)
+                    .setNegativeButton(R.string.cancel, null)
+                    .show();
         });
 
-        // Construir el diálogo con AlertDialog.Builder
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setView(view)
                 .setTitle(getString(R.string.add_button))
                 .setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.cancel())
-                .setPositiveButton(getString(R.string.save), (dialog, which) -> {
-                    // Recoger los datos introducidos
-                    String plate = editTextPlate.getText().toString().toUpperCase().trim();
-                    String color = editTextColor.getText().toString().trim();
-                    boolean isForeign = checkBoxForeign.isChecked();
-                    String country = isForeign ? editTextCountry.getText().toString().trim() : null;
+                .setPositiveButton(getString(R.string.save), null); // <--- define aquí primero
 
-                    // Validación básica
-                    if (plate.isEmpty()) {
-                        Toast.makeText(getActivity(), getString(R.string.save_without_complete), Toast.LENGTH_SHORT).show();
-                    } else if(plate.length() > 10){
-                        Toast.makeText(getActivity(), getString(R.string.plate_too_long), Toast.LENGTH_SHORT).show();
-                    } else {
-                        saveTesla(plate, color, isForeign, country, selectedPlayers);
+        AlertDialog dialog = builder.create(); // <--- luego creas
 
-                        // Mensaje de confirmación al usuario
-                        showConfirmationDialog();
-                    }
-                });
+        dialog.setOnShowListener(d -> {
+            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(v -> {
+                String plate = editTextPlate.getText().toString().toUpperCase().trim();
+                String color = editTextColor.getText().toString().trim();
+                boolean isForeign = checkBoxForeign.isChecked();
+                String country = isForeign ? editTextCountry.getText().toString().trim() : null;
 
-        return builder.create();
+                if (plate.isEmpty()) {
+                    Toast.makeText(getActivity(), getString(R.string.save_without_complete_plate), Toast.LENGTH_SHORT).show();
+                } else if (color.isEmpty()) {
+                    Toast.makeText(getActivity(), getString(R.string.save_without_complete_color), Toast.LENGTH_SHORT).show();
+                } else if (plate.length() > 10) {
+                    Toast.makeText(getActivity(), getString(R.string.plate_too_long), Toast.LENGTH_SHORT).show();
+                } else {
+                    saveTesla(plate, color, isForeign, country, selectedPlayers);
+                    dialog.dismiss();
+                    showConfirmationDialog();
+                }
+            });
+        });
+
+        dialog.show(); // <--- importante mostrar antes de usar getButton
+        return dialog;
     }
+
 
 
     @Override

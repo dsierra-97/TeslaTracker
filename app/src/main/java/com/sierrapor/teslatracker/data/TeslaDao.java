@@ -22,8 +22,8 @@ public interface TeslaDao {
     void delete(Tesla tesla);
     @Query("SELECT * FROM Teslas WHERE id = :id")
     LiveData<Tesla> getTesla(int id);
-    @Query("SELECT * FROM Teslas WHERE plate = :plate LIMIT 1")
-    Tesla getTeslaByPlate(String plate);
+    @Query("SELECT * FROM Teslas WHERE plate = :plate AND color = :color LIMIT 1")
+    Tesla getTeslaByPlateAndColor(String plate, String color);
     @Query("SELECT * FROM Teslas ORDER BY plate ASC")
     LiveData<List<Tesla>> getAllTeslas();
 }

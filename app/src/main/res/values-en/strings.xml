@@ -11,7 +11,6 @@
     <string name="language_spanish">Spanish</string>
     <string name="language_english">English</string>
     <string name="add_button">Add Tesla</string>
-    <string name="save_without_complete">Introduce at least a plate</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="plate_hint">Plate</string>
@@ -28,4 +27,6 @@
     <string name="details">Details</string>
     <string name="seen_by">Seen by</string>
     <string name="select_a_player">Select a player</string>
+    <string name="save_without_complete_plate">Introduce a plate</string>
+    <string name="save_without_complete_color">Introduce a color</string>
 </resources>

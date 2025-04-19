@@ -31,7 +31,8 @@ public class TeslaViewModel extends AndroidViewModel {
     public void check(Tesla newTesla) {
         repository.executorService.execute(() -> {
             String plate = newTesla.getPlate();
-            Tesla existingTesla = repository.getTeslaByPlate(plate);
+            String color = newTesla.getColor();
+            Tesla existingTesla = repository.getTeslaByPlateAndColor(plate, color);
             if (existingTesla != null) {
                 Tesla updatedTesla = updateExistingTesla(existingTesla, newTesla);
                 update(updatedTesla);

@@ -30,8 +30,8 @@ public class TeslaRepository {
     public LiveData<List<Tesla>> getAllTeslas() {
         return teslaDao.getAllTeslas();
     }
-    public Tesla getTeslaByPlate(String plate) {
-        return teslaDao.getTeslaByPlate(plate);
+    public Tesla getTeslaByPlateAndColor(String plate, String color) {
+        return teslaDao.getTeslaByPlateAndColor(plate, color);
     }
     public LiveData<Tesla> getTesla(int id) {
         return teslaDao.getTesla(id);
