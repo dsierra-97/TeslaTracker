@@ -5,7 +5,6 @@
     <string name="list">LIST</string>
     <string name="achievements">ACHIEVEMENTS</string>
     <string name="settings">SETTINGS</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pref_language">Language</string>
     <string name="pref_language_summary">Select your language</string>
     <string name="pref_language_dialog">Choose a language</string>
@@ -28,4 +27,5 @@
     <string name="edit">Edit</string>
     <string name="details">Details</string>
     <string name="seen_by">Seen by</string>
+    <string name="select_a_player">Select a player</string>
 </resources>

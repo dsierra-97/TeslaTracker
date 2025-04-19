@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -41,12 +42,13 @@ public class DetailFragment extends Fragment {
     private Spinner spinnerPlayers;
     private ChipGroup selectedPlayersContainer;
     private List<Tesla.players> selectedPlayers = new ArrayList<>();
+    private LinearLayout playerSelectionLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        // Obtención de referencias del layout. Asegúrate de que los IDs coincidan con tu XML.
+        // Obtención de referencias del layout.
         editPlate = view.findViewById(R.id.edit_plate);
         editColor = view.findViewById(R.id.edit_color);
         layoutCountry = view.findViewById(R.id.layout_country);
@@ -57,22 +59,12 @@ public class DetailFragment extends Fragment {
         checkboxForeign = view.findViewById(R.id.checkbox_foreign);
         spinnerPlayers = view.findViewById(R.id.playerSpinner);
         selectedPlayersContainer = view.findViewById(R.id.playerChips);
+        playerSelectionLayout = view.findViewById(R.id.playerSelectionLayout);
 
-        // Configuramos el listener para el CheckBox
-        checkboxForeign.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Si no está marcado, ocultamos el campo de país; si está marcado, lo mostramos.
-                layoutCountry.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-            }
-        });
-        // Establece el estado inicial del campo "Country" en función del estado del checkbox.
+        checkboxForeign.setOnCheckedChangeListener((buttonView, isChecked) ->
+                layoutCountry.setVisibility(isChecked ? View.VISIBLE : View.GONE));
         layoutCountry.setVisibility(checkboxForeign.isChecked() ? View.VISIBLE : View.GONE);
 
-        // En modo vista, ocultamos el Spinner.
-        spinnerPlayers.setVisibility(View.GONE);
-
-        // Cargar datos si vienen argumentos
         if (getArguments() != null) {
             tesla = (Tesla) getArguments().getSerializable("tesla");
             showData();
@@ -82,9 +74,8 @@ public class DetailFragment extends Fragment {
         buttonEdit.setOnClickListener(v -> {
             isEditMode = true;
             unlockFields();
-            // Al entrar en modo edición, mostramos el spinner
-            spinnerPlayers.setVisibility(View.VISIBLE);
-            updateChips(); // Para activar/eliminar la funcionalidad de los chips en modo edición
+            playerSelectionLayout.setVisibility(View.VISIBLE);
+            updateChips();
             buttonEdit.setVisibility(View.GONE);
             buttonSave.setVisibility(View.VISIBLE);
         });
@@ -93,36 +84,58 @@ public class DetailFragment extends Fragment {
             saveChanges();
             lockFields();
             isEditMode = false;
-            // Ocultamos el spinner en modo vista
-            spinnerPlayers.setVisibility(View.GONE);
+            playerSelectionLayout.setVisibility(View.GONE);
             updateChips();
             buttonEdit.setVisibility(View.VISIBLE);
             buttonSave.setVisibility(View.GONE);
         });
 
-        // Configuramos el Spinner
-        ArrayAdapter<Tesla.players> adapter = new ArrayAdapter<>(requireContext(),
-                android.R.layout.simple_spinner_item, Tesla.players.values());
+        setupPlayerSpinner(); // ← Aquí se aplica la nueva lógica encapsulada
+
+        return view;
+    }
+
+    private void setupPlayerSpinner() {
+        List<Object> spinnerItems = new ArrayList<>();
+        spinnerItems.add(getString(R.string.select_a_player));
+        spinnerItems.addAll(List.of(Tesla.players.values()));
+        ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(
+                requireContext(), android.R.layout.simple_spinner_item, spinnerItems
+        ) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setText(position == 0
+                        ? getString(R.string.select_a_player)
+                        : ((Tesla.players) getItem(position)).name());
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                return getView(position, convertView, parent);
+            }
+        };
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPlayers.setAdapter(adapter);
 
         spinnerPlayers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View viewSpinner, int position, long id) {
-                Tesla.players player = Tesla.players.values()[position];
-                if (!selectedPlayers.contains(player)) {
-                    selectedPlayers.add(player);
+                if (position == 0) return;
+                Tesla.players selected = (Tesla.players) parent.getItemAtPosition(position);
+                if (!selectedPlayers.contains(selected)) {
+                    selectedPlayers.add(selected);
                     updateChips();
                 }
+                spinnerPlayers.setSelection(0); // Reset al placeholder
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
-
-        return view;
     }
-
     private void showData() {
         editPlate.setText(tesla.getPlate());
         editColor.setText(tesla.getColor());

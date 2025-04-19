@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,6 +71,14 @@ public class MainActivity extends AppCompatActivity {
             // Muestra el DialogFragment usando el FragmentManager
             FragmentManager fragmentManager = getSupportFragmentManager();
             dialogFragment.show(fragmentManager, "AddTeslaDialog");
+        });
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.detailFragment) {
+                fabAddTesla.setVisibility(View.GONE); // Ocultar
+            } else {
+                fabAddTesla.setVisibility(View.VISIBLE); // Mostrar en los demás fragments
+            }
         });
 
         // Leer preferencia de modo oscuro
