@@ -108,7 +108,7 @@ public class DetailFragment extends Fragment {
             }
         });
 
-        setupPlayerSpinner(); // ← Aquí se aplica la nueva lógica encapsulada
+        setupPlayerSpinner();
 
         return view;
     }
@@ -131,7 +131,6 @@ public class DetailFragment extends Fragment {
                 }
                 spinnerPlayers.setSelection(0); // Reset al placeholder
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });

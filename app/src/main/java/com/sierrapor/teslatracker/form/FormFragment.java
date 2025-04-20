@@ -7,11 +7,16 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +34,7 @@ import com.sierrapor.teslatracker.data.TeslaViewModel;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -39,11 +45,15 @@ public class FormFragment extends DialogFragment {
     private EditText editTextColor;
     private EditText editTextCountry;
     private TeslaViewModel teslaViewModel;
+    private ChipGroup selectedPlayersContainer;
+    private final List<Tesla.players> selectedPlayers = new ArrayList<>();
+    private Spinner spinnerPlayers;
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_form, null);
+        teslaViewModel = new ViewModelProvider(this).get(TeslaViewModel.class);
 
         List<Tesla.players> selectedPlayers = new ArrayList<>();
         editTextPlate = view.findViewById(R.id.edit_text_plate);
@@ -51,54 +61,14 @@ public class FormFragment extends DialogFragment {
         editTextCountry = view.findViewById(R.id.edit_text_country);
         CheckBox checkBoxForeign = view.findViewById(R.id.checkbox_foreign);
         LinearLayout layoutCountry = view.findViewById(R.id.layout_country);
-        Button buttonSelectPlayers = view.findViewById(R.id.button_select_players);
-        ChipGroup chipGroupPlayers = view.findViewById(R.id.chip_group_players);
+        selectedPlayersContainer = view.findViewById(R.id.chip_group_players);
+        spinnerPlayers = view.findViewById(R.id.playerSpinner);
 
-        checkBoxForeign.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            layoutCountry.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-            if (!isChecked) editTextCountry.setText("");
+        checkBoxForeign.setOnCheckedChangeListener((buttonView, isChecked) ->{
+                layoutCountry.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                if (!isChecked) editTextCountry.setText("");
         });
-
-        buttonSelectPlayers.setOnClickListener(v -> {
-            Tesla.players[] playersArray = Tesla.players.values();
-            String[] playerNames = new String[playersArray.length];
-            boolean[] checkedItems = new boolean[playersArray.length];
-
-            for (int i = 0; i < playersArray.length; i++) {
-                playerNames[i] = playersArray[i].name();
-                checkedItems[i] = selectedPlayers.contains(playersArray[i]);
-            }
-
-            AlertDialog.Builder playerDialog = new AlertDialog.Builder(requireContext());
-            playerDialog.setTitle(R.string.player_hint);
-            playerDialog.setMultiChoiceItems(playerNames, checkedItems, (dialog, which, isChecked) -> {
-                if (isChecked) {
-                    if (!selectedPlayers.contains(playersArray[which])) {
-                        selectedPlayers.add(playersArray[which]);
-                    }
-                } else {
-                    selectedPlayers.remove(playersArray[which]);
-                }
-            });
-            playerDialog.setPositiveButton(R.string.ok,(dialog, which) -> {
-                // Actualizar chips al confirmar selección
-                chipGroupPlayers.removeAllViews(); // Limpiar anteriores
-                for (Tesla.players player : selectedPlayers) {
-                    Chip chip = new Chip(requireContext());
-                    chip.setText(player.name());
-                    chip.setChipBackgroundColor(ContextCompat.getColorStateList(requireContext(), R.color.colorBackground));;
-                    chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground));
-                    chip.setCloseIconVisible(true); // Hacemos visible el ícono de cierre
-                    chip.setOnCloseIconClickListener(view1 -> {
-                        selectedPlayers.remove(player);
-                        chipGroupPlayers.removeView(chip);
-                    });
-                    chipGroupPlayers.addView(chip);
-                }
-            });
-            playerDialog.setNegativeButton(R.string.cancel, null);
-            playerDialog.show();
-        });
+        layoutCountry.setVisibility(checkBoxForeign.isChecked() ? View.VISIBLE : View.GONE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setView(view)
@@ -131,19 +101,9 @@ public class FormFragment extends DialogFragment {
                 }
             });
         });
-
+        setupPlayerSpinner();
         dialog.show();
         return dialog;
-    }
-
-
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        // Obtener el TeslaViewModel del Activity que hospeda el diálogo.
-        // Esto asegura que se comparta el mismo ViewModel con el resto de la aplicación (por ejemplo, para actualizar la lista).
-        teslaViewModel = new ViewModelProvider(requireActivity()).get(TeslaViewModel.class);
     }
 
     private void saveTesla(String plate, String color, boolean isForeign, String country, List<Tesla.players> selectedPlayers) {
@@ -173,4 +133,66 @@ public class FormFragment extends DialogFragment {
         dialog.show();
     }
 
+    private void setupPlayerSpinner() {
+        List<Object> spinnerItems = new ArrayList<>();
+        spinnerItems.add(getString(R.string.select_a_player));
+        spinnerItems.addAll(List.of(Tesla.players.values()));
+        ArrayAdapter<Object> adapter = getObjectArrayAdapter(spinnerItems);
+        spinnerPlayers.setAdapter(adapter);
+
+        spinnerPlayers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View viewSpinner, int position, long id) {
+                if (position == 0) return;
+                Tesla.players selected = (Tesla.players) parent.getItemAtPosition(position);
+                if (!selectedPlayers.contains(selected)) {
+                    selectedPlayers.add(selected);
+                    updateChips();
+                }
+                spinnerPlayers.setSelection(0); // Reset al placeholder
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+    }
+
+    @NonNull
+    private ArrayAdapter<Object> getObjectArrayAdapter(List<Object> spinnerItems) {
+        ArrayAdapter<Object> adapter = new ArrayAdapter<>(
+                requireContext(), R.layout.item_spinner_player, spinnerItems
+        ) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setText(position == 0
+                        ? getString(R.string.select_a_player)
+                        : ((Tesla.players) Objects.requireNonNull(getItem(position))).name());
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                return getView(position, convertView, parent);
+            }
+        };
+        adapter.setDropDownViewResource(R.layout.item_spinner_player);
+        return adapter;
+    }
+
+    private void updateChips() {
+        selectedPlayersContainer.removeAllViews(); // Limpiar anteriores
+        for (Tesla.players player : selectedPlayers) {
+            Chip chip = new Chip(requireContext());
+            chip.setText(player.name());
+            chip.setChipBackgroundColor(ContextCompat.getColorStateList(requireContext(), R.color.colorBackground));;
+            chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground));
+            chip.setCloseIconVisible(true); // Hacemos visible el ícono de cierre
+            chip.setOnCloseIconClickListener(view1 -> {
+                selectedPlayers.remove(player);
+                selectedPlayersContainer.removeView(chip);
+            });
+            selectedPlayersContainer.addView(chip);
+        }
+    }
 }

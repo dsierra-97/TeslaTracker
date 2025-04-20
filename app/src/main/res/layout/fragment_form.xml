@@ -8,52 +8,139 @@
     android:id="@+id/formFragment"
     android:padding="16dp">
 
-    <!-- Campo para la matricula del Tesla -->
-    <EditText
-        android:id="@+id/edit_text_plate"
-        android:layout_width="match_parent"
-        android:layout_height="88dp"
-        android:hint="@string/plate_hint"
-        android:inputType="text"
-        android:imeOptions="actionNext" />
-
-    <!-- Campo para el color -->
-    <EditText
-        android:id="@+id/edit_text_color"
-        android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:hint="@string/color_hint"
-        android:inputType="text"
-        android:imeOptions="actionDone"/>
-
-    <CheckBox
-        android:id="@+id/checkbox_foreign"
-        android:layout_width="181dp"
-        android:layout_height="66dp"
-        android:text="@string/is_foreign" />
-
+    <!-- PLATE + COLOR -->
     <LinearLayout
-        android:id="@+id/layout_country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:baselineAligned="false"
+        android:layout_marginBottom="12dp">
 
-        <EditText
-            android:id="@+id/edit_text_country"
-            android:layout_width="match_parent"
+        <!-- PLATE -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/country_hint"
-            android:inputType="text"
-            android:imeOptions="actionDone"/>
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:id="@+id/label_plate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/plate_hint"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"/>
+
+            <EditText
+                android:id="@+id/edit_text_plate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/plate_hint"
+                android:inputType="text"
+                android:imeOptions="actionNext"/>
+        </LinearLayout>
+
+        <!-- COLOR -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <TextView
+                android:id="@+id/label_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/color_hint"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/edit_text_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/color_hint"
+                android:inputType="text"
+                android:imeOptions="actionNext"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_select_players"
-        android:layout_width="wrap_content"
+    <!-- FOREIGN + COUNTRY -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/player_hint" />
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="16dp"
+        android:baselineAligned="false">
 
+        <!-- CHECKBOX FOREIGN -->
+        <CheckBox
+            android:id="@+id/checkbox_foreign"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/is_foreign"
+            android:layout_marginEnd="8dp" />
+
+        <!-- COUNTRY -->
+        <LinearLayout
+            android:id="@+id/layout_country"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <TextView
+                android:id="@+id/label_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/country_hint"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/edit_text_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/country_hint"
+                android:inputType="text"
+                android:imeOptions="actionDone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- TÍTULO "OBSERVADO POR" -->
+    <TextView
+        android:id="@+id/label_observado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/seen_by"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- SPINNER -->
+    <LinearLayout
+        android:id="@+id/playerSelectionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/playerSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dropDownVerticalOffset="8dp"
+            android:padding="8dp"/>
+    </LinearLayout>
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group_players"
         android:layout_width="match_parent"
