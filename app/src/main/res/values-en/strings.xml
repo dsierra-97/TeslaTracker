@@ -30,4 +30,7 @@
     <string name="save_without_complete_plate_and_color">Introduce plate and color</string>
     <string name="save_without_complete_plate">Introduce a plate</string>
     <string name="save_without_complete_color">Introduce a color</string>
+    <string name="first_time_seen_hint">First time seen</string>
+    <string name="last_time_seen_hint">Last time seen</string>
+    <string name="save_without_complete_number">Number of times seen can´t be empty</string>
 </resources>

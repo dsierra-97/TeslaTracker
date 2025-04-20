@@ -48,4 +48,7 @@
     <string name="edit">Editar</string>
     <string name="seen_by">Observado por</string>
     <string name="select_a_player">Selecciona un jugador</string>
+    <string name="first_time_seen_hint">Primera vez visto</string>
+    <string name="last_time_seen_hint">Última vez visto</string>
+    <string name="save_without_complete_number">Número de veces visto no puede estar vacío</string>
 </resources>

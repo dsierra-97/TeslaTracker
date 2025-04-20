@@ -144,6 +144,68 @@ android:layout_height="match_parent">
             </LinearLayout>
         </LinearLayout>
 
+        <!-- FIRST + LAST TIME SEEN -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:baselineAligned="false"
+            android:layout_marginBottom="12dp">
+
+            <!-- FIRST TIME SEEN -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginEnd="8dp">
+
+                <TextView
+                    android:id="@+id/label_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/first_time_seen_hint"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+
+                <EditText
+                    android:id="@+id/edit_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/first_time_seen_hint"
+                    android:inputType="date"
+                    android:imeOptions="actionNext"/>
+            </LinearLayout>
+
+            <!-- LAST -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:id="@+id/label_last"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_time_seen_hint"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <EditText
+                    android:id="@+id/edit_last"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/last_time_seen_hint"
+                    android:inputType="date"
+                    android:imeOptions="actionNext"/>
+            </LinearLayout>
+        </LinearLayout>
+
         <!-- TÍTULO "OBSERVADO POR" -->
         <TextView
             android:id="@+id/label_observado"

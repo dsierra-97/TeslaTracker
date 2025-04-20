@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -33,7 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class DetailFragment extends Fragment {
 
-    private EditText editPlate, editColor, editCountry, editNumber;
+    private EditText editPlate, editColor, editCountry, editNumber, editFirst, editLast;
     private Button buttonEdit, buttonSave;
     private LinearLayout layoutCountry;
     private boolean isEditMode = false;
@@ -43,7 +44,7 @@ public class DetailFragment extends Fragment {
     private CheckBox checkboxForeign;
     private Spinner spinnerPlayers;
     private ChipGroup selectedPlayersContainer;
-    private List<Tesla.players> selectedPlayers = new ArrayList<>();
+    private final List<Tesla.players> selectedPlayers = new ArrayList<>();
     private LinearLayout playerSelectionLayout;
 
     @Override
@@ -57,6 +58,8 @@ public class DetailFragment extends Fragment {
         layoutCountry = view.findViewById(R.id.layout_country);
         editCountry = view.findViewById(R.id.edit_country);
         editNumber = view.findViewById(R.id.edit_number);
+        editFirst = view.findViewById(R.id.edit_first);
+        editLast = view.findViewById(R.id.edit_last);
         buttonEdit = view.findViewById(R.id.button_edit);
         buttonSave = view.findViewById(R.id.button_save);
         checkboxForeign = view.findViewById(R.id.checkbox_foreign);
@@ -84,13 +87,25 @@ public class DetailFragment extends Fragment {
         });
 
         buttonSave.setOnClickListener(v -> {
-            saveChanges();
-            lockFields();
-            isEditMode = false;
-            playerSelectionLayout.setVisibility(View.GONE);
-            updateChips();
-            buttonEdit.setVisibility(View.VISIBLE);
-            buttonSave.setVisibility(View.GONE);
+            if (editPlate.getText().toString().isEmpty() && editColor.getText().toString().isEmpty()) {
+                Toast.makeText(getActivity(), getString(R.string.save_without_complete_plate_and_color), Toast.LENGTH_SHORT).show();
+            } else if (editPlate.getText().toString().isEmpty()) {
+                Toast.makeText(getActivity(), getString(R.string.save_without_complete_plate), Toast.LENGTH_SHORT).show();
+            }else if (editColor.getText().toString().isEmpty()) {
+                Toast.makeText(getActivity(), getString(R.string.save_without_complete_color), Toast.LENGTH_SHORT).show();
+            } else if (editPlate.getText().toString().length() > 10) {
+                Toast.makeText(getActivity(), getString(R.string.plate_too_long), Toast.LENGTH_SHORT).show();
+            } else if (editNumber.getText().toString().isEmpty()) {
+                Toast.makeText(getActivity(), getString(R.string.save_without_complete_number), Toast.LENGTH_SHORT).show();
+            } else {
+                saveChanges();
+                lockFields();
+                isEditMode = false;
+                playerSelectionLayout.setVisibility(View.GONE);
+                updateChips();
+                buttonEdit.setVisibility(View.VISIBLE);
+                buttonSave.setVisibility(View.GONE);
+            }
         });
 
         setupPlayerSpinner(); // ← Aquí se aplica la nueva lógica encapsulada
@@ -151,6 +166,8 @@ public class DetailFragment extends Fragment {
         editColor.setText(tesla.getColor());
         editCountry.setText(tesla.getCountry());
         editNumber.setText(String.valueOf(tesla.getNumberTimesSeen()));
+        editFirst.setText(String.valueOf(tesla.getFirstTimeSeen()));
+        editLast.setText(String.valueOf(tesla.getLastTimeSeen()));
         checkboxForeign.setChecked(tesla.isForeign());
 
         if (tesla.getSeenBy() != null) {
@@ -165,6 +182,8 @@ public class DetailFragment extends Fragment {
         editColor.setEnabled(false);
         editCountry.setEnabled(false);
         editNumber.setEnabled(false);
+        editFirst.setEnabled(false);
+        editLast.setEnabled(false);
         checkboxForeign.setEnabled(false);
         // No es necesario bloquear manualmente el ChipGroup;
         // La eliminación se controla en updateChips según isEditMode.
@@ -195,13 +214,12 @@ public class DetailFragment extends Fragment {
     }
 
     private void updateChips() {
-        // Elimina todos los chips
         selectedPlayersContainer.removeAllViews();
 
         for (Tesla.players player : selectedPlayers) {
             Chip chip = new Chip(requireContext());
             chip.setText(player.name());
-            chip.setChipBackgroundColor(ContextCompat.getColorStateList(requireContext(), R.color.colorBackground));;
+            chip.setChipBackgroundColor(ContextCompat.getColorStateList(requireContext(), R.color.colorBackground));
             chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground));
             chip.setCloseIconVisible(true);
             chip.setClickable(isEditMode);
