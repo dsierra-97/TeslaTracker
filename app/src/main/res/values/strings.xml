@@ -46,6 +46,9 @@
     <!-- Detail -->
     <string name="details">Detalles</string>
     <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="delete_confirmation_title">Confirmar eliminación</string>
+    <string name="delete_confirmation_message">¿Seguro que desea eliminar este Tesla?</string>
     <string name="seen_by">Observado por</string>
     <string name="select_a_player">Selecciona un jugador</string>
     <string name="first_time_seen_hint">Primera vez visto</string>

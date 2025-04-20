@@ -1,7 +1,13 @@
 package com.sierrapor.teslatracker.detail;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -9,15 +15,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavOptions;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -40,7 +52,6 @@ public class DetailFragment extends Fragment {
     private boolean isEditMode = false;
     private TeslaViewModel viewModel;
     private Tesla tesla;
-
     private CheckBox checkboxForeign;
     private Spinner spinnerPlayers;
     private ChipGroup selectedPlayersContainer;
@@ -51,6 +62,22 @@ public class DetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         viewModel = new ViewModelProvider(this).get(TeslaViewModel.class);
+
+        requireActivity().addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.detail_menu, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.action_delete) {
+                    showDeleteDialog();
+                    return true;
+                }
+                return false;
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         // Obtención de referencias del layout.
         editPlate = view.findViewById(R.id.edit_plate);
@@ -233,6 +260,47 @@ public class DetailFragment extends Fragment {
             }
             selectedPlayersContainer.addView(chip);
         }
+    }
+
+    private void showDeleteDialog() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.delete_confirmation_title)
+                .setMessage(R.string.delete_confirmation_message)
+                .setPositiveButton(R.string.delete, (dialog, which) -> deleteTesla())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void deleteTesla() {
+        viewModel.delete(tesla);
+        //Borra la pila (para que Atras no funcione)
+        new NavOptions.Builder().setPopUpTo(R.id.listFragment, true) // limpia hasta listFragment, inclusive
+                .build();
+
+        //Navega a listFragment para no mostrar un tesla ya eliminado
+        NavHostFragment.findNavController(this).navigate(
+                R.id.listFragment,
+                null,
+                new NavOptions.Builder()
+                        .setPopUpTo(R.id.detailFragment, true) // o listFragment, según lo que quieras limpiar
+                        .build()
+        );
+        //Muestra a polar :)
+        showConfirmationDialog();
+    }
+
+    private void showConfirmationDialog() {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.setContentView(R.layout.dialog_delete_confirmation);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.setCancelable(true);
+
+        ImageView imageView = dialog.findViewById(R.id.image_delete_confirmation);
+        imageView.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 }
 

@@ -25,6 +25,7 @@
     <string name="dark_mode_summary">Activate or deactivate the dark mode</string>
     <string name="edit">Edit</string>
     <string name="details">Details</string>
+    <string name="delete">Delete</string>
     <string name="seen_by">Seen by</string>
     <string name="select_a_player">Select a player</string>
     <string name="save_without_complete_plate_and_color">Introduce plate and color</string>
@@ -33,4 +34,7 @@
     <string name="first_time_seen_hint">First time seen</string>
     <string name="last_time_seen_hint">Last time seen</string>
     <string name="save_without_complete_number">Number of times seen can´t be empty</string>
+    <string name="delete_confirmation_title">Confirm deletion</string>
+    <string name="delete_confirmation_message">Are you sure you want to delete this Tesla?</string>
+
 </resources>
