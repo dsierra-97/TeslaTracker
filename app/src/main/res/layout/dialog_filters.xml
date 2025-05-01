@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Color -->
+    <TextView
+        android:text="@string/color_hint"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/edittext_color"
+        android:hint="@string/color_example"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- País -->
+    <TextView
+        android:text="@string/country_hint"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/edittext_country"
+        android:hint="@string/country_example"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- ¿Es extranjero? -->
+    <CheckBox
+        android:id="@+id/checkbox_foreign"
+        android:text="@string/only_foreign"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- Número de veces visto -->
+    <TextView
+        android:text="@string/min_times_seen"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <SeekBar
+        android:id="@+id/seekbar_times_seen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="50"/>
+
+    <TextView
+        android:id="@+id/textview_times_seen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zero"
+        android:layout_gravity="end"/>
+
+    <!-- Jugadores (seenBy) -->
+    <TextView
+        android:text="@string/seen_by"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipgroup_players"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkableBehavior="all">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_erika"
+            android:text="@string/erika"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_marina"
+            android:text="@string/marina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_diego"
+            android:text="@string/diego"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_manu"
+            android:text="@string/manu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_susi"
+            android:text="@string/susi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"/>
+    </com.google.android.material.chip.ChipGroup>
+
+
+    <!-- Botón aplicar -->
+    <Button
+        android:id="@+id/button_apply"
+        android:text="@string/apply_filters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"/>
+</LinearLayout>

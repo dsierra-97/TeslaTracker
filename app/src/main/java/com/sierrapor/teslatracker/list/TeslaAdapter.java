@@ -8,60 +8,56 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sierrapor.teslatracker.R;
 import com.sierrapor.teslatracker.data.Tesla;
 
-import java.util.ArrayList;
-import java.util.List;
+public class TeslaAdapter extends ListAdapter<Tesla, RecyclerView.ViewHolder> {
 
-public class TeslaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
-    private List<Tesla> teslaList = new ArrayList<>();
-
-    public void setTeslaList(List<Tesla> teslaList) {
-        this.teslaList = teslaList;
-        notifyDataSetChanged();
+    public TeslaAdapter() {
+        super(DIFF_CALLBACK);
     }
 
-    // El total de items es la cantidad de Teslas + 1 (el header)
+    // --------- VIEW TYPES ---------
+
     @Override
     public int getItemCount() {
-        return teslaList.size() + 1;
+        return super.getItemCount() + 1; // +1 por el header
     }
 
-    // Se define el tipo de vista según la posición
     @Override
     public int getItemViewType(int position) {
         return position == 0 ? TYPE_HEADER : TYPE_ITEM;
     }
 
+    // --------- VIEW HOLDERS ---------
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == TYPE_HEADER) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_header, parent, false);
+            View view = inflater.inflate(R.layout.item_header, parent, false);
             return new HeaderViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_tesla, parent, false);
+            View view = inflater.inflate(R.layout.item_tesla, parent, false);
             return new TeslaViewHolder(view);
         }
     }
 
-    // Al enlazar la vista, se distingue si es header o un item normal
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderViewHolder) {
-            // Configuras el cabecero (puedes asignar un título o imagen, etc.)
-            //((HeaderViewHolder) holder).headerTitle.setText("Cabecero de la lista");
-        } else if (holder instanceof TeslaViewHolder) {
-            // Como el primer elemento es el header, los datos empiezan desde la posición 1
-            Tesla tesla = teslaList.get(position - 1);
+            // Puedes configurar el texto del header si quieres
+            // ((HeaderViewHolder) holder).headerTitle.setText("Cabecera");
+        } else {
+            Tesla tesla = getItem(position - 1); // Compensa el header
             TeslaViewHolder itemHolder = (TeslaViewHolder) holder;
             itemHolder.plateTextView.setText(tesla.getPlate());
             itemHolder.colorTextView.setText(tesla.getColor());
@@ -75,7 +71,6 @@ public class TeslaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    // ViewHolder para el item de la lista
     static class TeslaViewHolder extends RecyclerView.ViewHolder {
         TextView plateTextView, colorTextView, countTextView;
 
@@ -87,7 +82,6 @@ public class TeslaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    // ViewHolder para el cabecero
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
         TextView headerTitle;
 
@@ -96,5 +90,18 @@ public class TeslaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             headerTitle = itemView.findViewById(R.id.text_header_plate);
         }
     }
-}
 
+    // --------- DIFF CALLBACK ---------
+
+    private static final DiffUtil.ItemCallback<Tesla> DIFF_CALLBACK = new DiffUtil.ItemCallback<Tesla>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Tesla oldItem, @NonNull Tesla newItem) {
+            return oldItem.getPlate().equals(newItem.getPlate()); // Asumimos que la matrícula es única
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Tesla oldItem, @NonNull Tesla newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
+}

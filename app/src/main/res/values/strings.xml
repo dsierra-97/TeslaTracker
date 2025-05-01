@@ -38,6 +38,9 @@
     <!-- List -->
     <string name="number_times_seen_hint">Número de veces visto</string>
     <string name="number_times_seen_short_hint">Veces visto</string>
+    <string name="search">Buscar</string>
+    <string name="filter">Filtrar</string>
+
 
     <!-- Modo Oscuro -->
     <string name="dark_mode">Modo Oscuro</string>
@@ -54,4 +57,23 @@
     <string name="first_time_seen_hint">Primera vez visto</string>
     <string name="last_time_seen_hint">Última vez visto</string>
     <string name="save_without_complete_number">Número de veces visto no puede estar vacío</string>
+
+    <!-- Filter -->
+    <string name="color_example">Eg: negro, granate…</string>
+    <string name="country_example">Eg: Francia, Alemania…</string>
+    <string name="only_foreign">Solo coches extrangeros</string>
+    <string name="min_times_seen">Mínimo de veces visto</string>
+    <string name="zero" translatable="false">0</string>
+    <string name="apply_filters">Aplicar filtros</string>
+
+    <!-- Jugadores -->
+    <string name="erika" translatable="false">Erika</string>
+    <string name="diego" translatable="false">Diego</string>
+    <string name="marina" translatable="false">Marina</string>
+    <string name="manu" translatable="false">Manu</string>
+    <string name="susi" translatable="false">Susi</string>
+
+
+
+
 </resources>

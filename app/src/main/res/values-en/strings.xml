@@ -21,6 +21,8 @@
     <string name="plate_too_long">The plate is too long</string>
     <string name="number_times_seen_hint">Number of times seen</string>
     <string name="number_times_seen_short_hint">Times seen</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="dark_mode_summary">Activate or deactivate the dark mode</string>
     <string name="edit">Edit</string>
@@ -36,5 +38,10 @@
     <string name="save_without_complete_number">Number of times seen can´t be empty</string>
     <string name="delete_confirmation_title">Confirm deletion</string>
     <string name="delete_confirmation_message">Are you sure you want to delete this Tesla?</string>
+    <string name="color_example">Eg: black, garnet...</string>
+    <string name="country_example">Eg: France, Germany...</string>
+    <string name="only_foreign">Only foreign cars</string>
+    <string name="min_times_seen">Minimum times seen</string>
+    <string name="apply_filters">Apply filters</string>
 
 </resources>

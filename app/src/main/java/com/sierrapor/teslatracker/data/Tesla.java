@@ -30,7 +30,7 @@ public class Tesla implements Serializable {
     private String plate;
     @ColumnInfo(name = "color")
     private String color;
-    @ColumnInfo(name = "foreign")
+    @ColumnInfo(name = "is_foreign")
     private boolean foreign;
     @ColumnInfo(name = "country")
     private String country;

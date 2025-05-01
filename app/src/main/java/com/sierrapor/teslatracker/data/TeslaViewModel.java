@@ -6,6 +6,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.sqlite.db.SimpleSQLiteQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
+
+import com.sierrapor.teslatracker.list.filter.FilterOptions;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,11 +25,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class TeslaViewModel extends AndroidViewModel {
     private final TeslaRepository repository;
+    private final TeslaDao dao;
 
     @Inject
-    public TeslaViewModel(@NonNull Application application, TeslaRepository repository) {
+    public TeslaViewModel(@NonNull Application application, TeslaRepository repository, TeslaDao dao) {
         super(application);
         this.repository = repository;
+        this.dao = dao;
     }
     public LiveData<List<Tesla>> getAllTeslas() {
 
@@ -137,4 +144,57 @@ public class TeslaViewModel extends AndroidViewModel {
         repository.delete(currentTesla);
 
     }
+    private final MediatorLiveData<List<Tesla>> filteredTeslas = new MediatorLiveData<>();
+
+    public LiveData<List<Tesla>> getFilteredTeslas() {
+        return filteredTeslas;
+    }
+
+    public void applySearchAndFilters(String searchQuery, FilterOptions filters) {
+        // Limpiar cualquier fuente previa antes de añadir una nueva
+        filteredTeslas.setValue(null);
+
+        StringBuilder query = new StringBuilder("SELECT * FROM teslas WHERE 1=1");
+        List<Object> args = new ArrayList<>();
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            query.append(" AND plate LIKE ?");
+            args.add("%" + searchQuery.trim() + "%");
+        }
+
+        if (filters.getColor() != null && !filters.getColor().isEmpty()) {
+            query.append(" AND color = ?");
+            args.add(filters.getColor());
+        }
+
+        if (filters.getCountry() != null && !filters.getCountry().isEmpty()) {
+            query.append(" AND country = ?");
+            args.add(filters.getCountry());
+        }
+
+        if (filters.isForeign()) {
+            query.append(" AND is_foreign = 1");
+        }
+
+        if (filters.getMinTimesSeen() > 0) {
+            query.append(" AND number_times_seen >= ?");
+            args.add(filters.getMinTimesSeen());
+        }
+
+        if (filters.getSeenBy() != null && !filters.getSeenBy().isEmpty()) {
+            for (Tesla.players player : filters.getSeenBy()) {
+                query.append(" AND seen_by LIKE ?");
+                args.add("%" + player.toString() + "%");
+            }
+        }
+
+        SupportSQLiteQuery finalQuery = new SimpleSQLiteQuery(query.toString(), args.toArray());
+        LiveData<List<Tesla>> source = dao.getFilteredTeslas(finalQuery);
+
+        filteredTeslas.addSource(source, teslas -> {
+            filteredTeslas.setValue(teslas);
+            filteredTeslas.removeSource(source);
+        });
+    }
+
 }
