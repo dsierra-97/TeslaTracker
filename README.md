@@ -33,10 +33,6 @@ MVVM (Model - View - ViewModel)
 └── UI (Fragments + RecyclerView)
 ```
 
-## 📸 Capturas
-
-*(Puedes añadir capturas de pantalla aquí si lo deseas)*
-
 ## 🚀 Cómo ejecutar el proyecto
 
 1. Clona el repositorio
