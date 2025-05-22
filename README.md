@@ -1,7 +1,7 @@
 # TeslaTracker 🚗⚡
 
 Una aplicación Android para registrar avistamientos de Teslas en distintos lugares, desarrollada en Java con Room como solución de persistencia local.
-Empezó como un juego entre mi pareja y yo cuando aparecieron los primeros coches Tesla. Rápidamente pasamos del "Ey, mira un tesla" al "ese ya lo hemos visto" o
+Empezó como un juego entre mi pareja y yo cuando aparecieron los primeros coches Tesla en España. Rápidamente pasamos del "Ey, mira un tesla" al "ese ya lo hemos visto" o
 "ese me suena" y de ahí a apuntar parcialmente las matriculas de los teslas que veíamos. Finalmente se me ocurrió hacer una app para registrar todo esto y de paso
 aprender Android. La app sigue en desarrollo (comencé en diciembre de 2024) ya que programo en mi tiempo libre.
 
